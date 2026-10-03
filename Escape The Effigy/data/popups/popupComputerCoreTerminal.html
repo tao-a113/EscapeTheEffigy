@@ -1,0 +1,183 @@
+<html>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<head>
+</head>
+<style>
+@font-face { font-family: Digital7; src: url('../digital-7/digital-7.ttf'); } 
+
+.circle {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+}
+
+.square {
+  height: 50px;
+  width: 50px;
+}
+
+.triangle-up {
+  width: 0;
+  height: 0;
+  border-left: 25px solid transparent;
+  border-right: 25px solid transparent;
+  border-bottom: 50px solid;
+  border-top: 0px solid transparent;
+  background-color: black;
+  
+}
+
+.trapezoid {
+	border-bottom: 50px solid;
+	border-left: 25px solid transparent;
+	border-right: 25px solid transparent;
+	border-top: 0px solid;
+	background-color: black;
+	height: 0;
+	width: 125px;
+}
+
+.zoom {
+	transition: transform .2s;
+	cursor:pointer;
+}
+
+.zoom:focus {
+outline:0;
+}
+
+.zoom:hover {
+  transform: scale(1.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+
+</style>
+<script>
+
+$( document ).ready(function() {
+
+var role = localStorage.getItem("role");
+	if (role=="Passenger") {
+		$("#part").html ("part 1");
+	}
+	if (role=="Officer") {
+		$("#part").html ("part 2");
+	}
+	if (role=="Engineer") {
+		$("#part").html ("part 3");
+	}
+
+	$('.buttons').on('mousedown', function(e) {
+		$(this).addClass('active');
+		timeOut = setInterval(function(){
+		
+			var role = localStorage.getItem("role");
+			var button = e.target.id;
+			var answerText;
+			var correct = false;
+			$("#answer").html("");
+			$("#answer").css('color', 'white');
+			
+			if (role=="Passenger" && (button=="7" || button=="12")) {
+				$("#answer").css('color', 'gold');
+			}
+			if (role=="Officer" && (button=="10" || button=="12")) {
+				$("#answer").css('color', 'gold');
+			}
+			if (role=="Engineer" && (button=="7" || button=="10")) {
+				$("#answer").css('color', 'gold');
+			}
+			
+			if (button=="1") {
+				answerText = "1554";
+			} else if (button=="2") {
+			answerText = "3654";
+			} else if (button=="3") {
+			answerText = "8972";
+			} else if (button=="4") {
+			answerText = "1463";
+			} else if (button=="5") {
+			answerText = "0074";
+			} else if (button=="6") {
+			answerText = "9401";
+			} else if (button=="7") {
+				// here
+				answerText = "9146";
+			} else if (button=="8") {
+			answerText = "6560";
+			} else if (button=="9") {
+			answerText = "8004";
+			} else if (button=="10") {
+				//here
+				answerText = "0155";
+			} else if (button=="11") {
+			answerText = "1121";
+			} else if (button=="12") {
+				// here
+				answerText = "3211";
+			} else if (button=="13") {
+			answerText = "7756";
+			} else if (button=="14") {
+			answerText = "0404";
+			} else if (button=="15") {
+			answerText = "2217";
+			} else if (button=="16") {
+			answerText = "0001";
+			}
+			
+			$("#answer").html(answerText);
+			$("#answer").show ();
+				
+		
+		}, 1000);
+	}).bind('mouseup', function() {
+	
+		$(this).removeClass('active');
+
+		var role = localStorage.getItem("role");
+		var button = $("this").attr('id');
+		$("#answer").html("");
+		$("#answer").hide ();
+		clearInterval(timeOut);
+	});
+	
+	$("#body").bind('mouseup', function() {
+		$("#answer").html("");
+		$("#answer").hide ();
+		clearInterval(timeOut);
+	});
+	
+});
+
+</script>
+<body id="body" style="background-color:black;">
+
+	<p style="top:130px; font-family:Digital7; left:50px; position:absolute; color:white; font-size:16pt;" id='part'> </p>
+
+	<input id="1" class="buttons square zoom" type="button" style="background-color:red; top:45px; left:100px; position:absolute;"/>
+	<input id="2" class="buttons circle zoom" type="button" style="background-color:red; top:505px; left:300px; position:absolute;"/>
+	<input id="3" class="buttons triangle-up zoom" type="button" style="color:red; top:345px; left:540px; position:absolute;"/>
+	<input id="4" class="buttons trapezoid zoom" type="button" style="color:red; top:245px; left:50px; position:absolute;"/>
+
+	<input id="5" class="buttons square zoom" type="button" style="background-color:blue; top:50px; left:510px; position:absolute;"/>
+	<input id="6" class="buttons circle zoom" type="button" style="background-color:blue; top:195px; left:370px; position:absolute;"/>
+	<input id="7" class="buttons triangle-up zoom" type="button" style="color:blue; top:315px; left:260px; position:absolute;"/>
+	<input id="8" class="buttons trapezoid zoom" type="button" style="color:blue; top:145px; left:180px; position:absolute;"/>
+
+	<input id="9" class="buttons square zoom" type="button" style="background-color:green; top:435px; left:160px; position:absolute;"/>
+	<input id="10" class="buttons circle zoom" type="button" style="background-color:green; top:140px; left:590px; position:absolute;"/>
+	<input id="11" class="buttons triangle-up zoom" type="button" style="color:green; top:80px; left:260px; position:absolute;"/>
+	<input id="12" class="buttons trapezoid zoom" type="button" style="color:green; top:525px; left:420px; position:absolute;"/>
+
+	<input id="13" class="buttons square zoom" type="button" style="background-color:yellow; top:380px; left:390px; position:absolute;"/>
+	<input id="14" class="buttons circle zoom" type="button" style="background-color:yellow; top:385px; left:10px; position:absolute;"/>
+	<input id="15" class="buttons triangle-up zoom" type="button" style="color:yellow; top:250px; left:450px; position:absolute;"/>
+	<input id="16" class="buttons trapezoid zoom" type="button" style="color:yellow; top:20px; left:360px; position:absolute;"/>
+	
+	
+	<div>
+		<p id="answer" style="color:white; left:50px; top:500px; height:50px; width:200px; position:absolute; display:none;"></p>
+	</div>
+	
+</body>
+</html>

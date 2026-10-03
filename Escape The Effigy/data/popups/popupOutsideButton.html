@@ -1,0 +1,182 @@
+	<html>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<head>
+</head>
+<style>
+@font-face { font-family: Digital7; src: url('digital-7/digital-7.ttf'); } 
+
+#sleepingBar {
+  width: 10%;
+  height: 30px;
+  background-color: #4CAF50;
+  text-align: center; /* To center it horizontally (if you want) */
+  line-height: 30px; /* To center it vertically */
+  color: white;
+}
+
+#myProgress {
+  width: 600px%;
+  background-color: grey;
+  left:400px; top:350px; position:absolute;
+  width:600px;
+  transform: rotate(-90deg);
+}
+
+#sleepingBar {
+  width: 1%;
+  height: 30px;
+  background-color: green;
+}
+
+</style>
+<script>
+
+window.onload = function(){
+	
+	var barNumber = 0;
+	
+	function degradeTimer () {
+		
+		var elem = document.getElementById("sleepingBar");
+		var id = setInterval(degrade, 300);
+		function degrade() {
+			if (barNumber > 0) {
+			
+				if (barNumber >= 100) {
+					clearInterval(id);
+				}
+			
+				barNumber--;
+				elem.style.width = barNumber + "%";
+			}
+		}
+	}
+	degradeTimer ();
+	
+	function colorButtonsTimer () {
+		
+		var but1 = document.getElementById("button1");
+		var but2 = document.getElementById("button2");
+		var but3 = document.getElementById("button3");
+		var but4 = document.getElementById("button4");
+		
+		var buttons = [but1, but2, but3, but4];
+		
+		var randomNumber = Math.floor(Math.random() * 4); 
+		
+
+		buttons [randomNumber].className = "red";
+		buttons [randomNumber].style.background='red';
+		buttons.splice (randomNumber, 1);
+		
+		var randomNumber = Math.floor(Math.random() * 3);
+	
+		buttons [randomNumber].className = "yellow";
+		buttons [randomNumber].style.background='yellow';
+		buttons.splice (randomNumber, 1);
+		
+		var randomNumber = Math.floor(Math.random() * 2);
+
+		buttons [randomNumber].className = "green";
+		buttons [randomNumber].style.background='green';
+		buttons.splice (randomNumber, 1);
+		
+		buttons [0].className = "";
+		buttons [0].className = "blue";
+		buttons [0].style.background='blue';
+		buttons.splice (randomNumber, 1);
+		
+	}
+		
+	var colorButtons = setInterval(colorButtonsTimer, 4000);		
+	if (barNumber >= 100) {
+		clearInterval(colorButtons);
+	}
+	
+	function colorImageTimer () {
+	
+		var colors = ["red", "blue", "green", "yellow"];
+		var randomNumber = Math.floor(Math.random() * 4);
+		
+		var colorToChoose = colors[randomNumber];
+		
+		var img = document.getElementById("image");
+		img.className = colorToChoose;
+		img.style.background=colorToChoose;
+	}
+	var colorImage = setInterval(colorImageTimer, 4000);		
+	if (barNumber >= 100) {
+		clearInterval(colorImage);
+	}
+	
+		$('.buttons').click(function(){
+		
+			var img = $( "#image" ).attr('class');
+			var but = $( this ).attr('class');
+			
+			if (img == but) {
+				move ();
+			}
+		
+		});
+	
+	function finshed () {
+	
+		var role = localStorage.getItem("role");
+		
+		var answerText;
+		
+		if (role=="Passenger" ) {
+			answerText = "#885...";
+		}
+		if (role=="Officer") {
+			answerText = "...086...";
+		}
+		if (role=="Engineer") {
+			answerText = "...337";
+		}
+	
+		$("#answer").html(answerText);
+		$("#answer").show ();
+	}
+	
+	
+	var i = 0;
+	function move() {
+
+		var elem = document.getElementById("sleepingBar");
+
+		if (barNumber >= 100) {
+			finshed();
+		} else {
+			barNumber = barNumber + 2;
+			elem.style.width = barNumber + "%";
+		}  
+	}
+		
+};
+
+</script>
+<body style="background-color:black">
+	
+	<div style="top:66px; left:50px; height:600px; width:500px; position:absolute; background-color:grey; border-radius:50pt;"> </div>
+	
+	<div id="image" style="top:200px; left:210px; height:150px; width:150px; position:absolute; background-color:white; border:4pt solid black"></div>
+	
+	<div id="myProgress">
+		<div id="sleepingBar">
+		</div>
+	</div>
+	
+	<input id="button1" class="buttons" type="button" style="top:550px; left:100px; height:40px; width:70px; position:absolute; border:1pt solid black"/>
+	<input id="button2" class="buttons" type="button" style="top:550px; left:200px; height:40px; width:70px; position:absolute; border:1pt solid black"/>
+	<input id="button3" class="buttons" type="button" style="top:550px; left:300px; height:40px; width:70px; position:absolute; border:1pt solid black"/>
+	<input id="button4" class="buttons" type="button" style="top:550px; left:400px; height:40px; width:70px; position:absolute; border:1pt solid black"/>
+	
+	<div>
+		<p id="answer" style="color:white; left:260px; top:400px; height:50px; width:200px; position:absolute; display:none; font-size:28px; "></p>
+	</div>
+	
+</body>
+</html>

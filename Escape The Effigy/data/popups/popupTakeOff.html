@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <title>The Effigy - Escape Room v1.0</title>
+</head>
+
+<style>
+@font-face { font-family: Digital7; src: url('../digital-7/digital-7.ttf'); } 
+</style>
+
+<script>
+
+window.onload = function(){
+	$('#button1').click(function(){
+		
+		var codes = document.getElementById('text').value;
+		
+		if (codes != "554211179") {
+			document.getElementById("reply").innerHTML = "In-correct launch codes";
+			return;
+		}
+		
+		var o2 = localStorage.getItem("isShuttleGotOxygen");
+		var meds = localStorage.getItem("isShuttleGotMedicine");
+		var food = localStorage.getItem("isShuttleGotFood");
+		var power = localStorage.getItem("isShuttleGotPower");
+		var doors = localStorage.getItem("blastDoorsFixed1");
+		var doors2 = localStorage.getItem("blastDoorsFixed2");
+		
+		console.log (o2 + meds + food + power + doors);
+		
+		if (o2 == "true" && meds =="true" && food == "true" && power == "true" && doors == "true" && doors2 == "true") {
+			localStorage.setItem("takeOff", "true");
+			window.close();
+		} else {
+			document.getElementById("reply").innerHTML = "The shuttle is not yet ready for launch.";
+		}
+		
+	});
+};
+
+</script>
+
+<body style="background-color:black; color:black;font-size:18pt; font-family:Digital7;">	
+
+	<div>
+		<p id="instr" style="color:white; left:150px; top:100px; height:50px; width:500px; position:absolute;">Once the shuttle is completely ready, make sure all party members are on the shuttle and all type in the launch codes at the same time.</p>
+		<input id="text" type="text" placeholder="Launch Codes" style="left:250px; top:300px; height:40px; width:250px; position:absolute;"/>
+		<input id="button1" class="buttons" type="button" value="Punch it!" style="top:370px; left:350px; position:absolute"/>
+	</div>
+<p id="reply" style="color:white; left:150px; top:230px; height:50px; width:500px; position:absolute;">
+</body>

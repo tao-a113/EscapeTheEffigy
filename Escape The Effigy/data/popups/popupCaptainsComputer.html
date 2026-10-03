@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Captains Personal Computer</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<script>
+
+var attempts;
+
+window.onload = function(){
+
+	attempts = localStorage.getItem("computerAttempts");
+
+	if (parseInt(attempts) > 2) {
+		document.getElementById ("lockScreen").style.display = "none";
+		document.getElementById ("image").style.display = "none";
+		document.getElementById ("lockedMessage").style.display = "block";
+	} else {
+		$("#attempts").html("Attempts: " + attempts);
+	}
+
+	var recovered = false;
+
+	$('#button').click(function(){
+		if (recovered) {
+			localStorage.setItem("computerAttempts", "0");
+		}
+
+		attempts = parseInt(localStorage.getItem("computerAttempts"));
+
+		var newAttempts = parseInt(attempts) + 1;
+		localStorage.setItem("computerAttempts", newAttempts);
+		
+		$("#attempts").html("Attempts: " + newAttempts);
+		
+		if (newAttempts < 3) {
+
+			var username = document.getElementById ("username");
+			var password = document.getElementById ("password");
+
+			if (username.value == "Owen" && password.value == "Effigy123") {
+				revealAnswer ();
+			}
+		} else {
+			// locked out
+			document.getElementById ("lockScreen").style.display = "none";
+			document.getElementById ("image").style.display = "none";
+			document.getElementById ("lockedMessage").style.display = "block";
+		}
+	});
+	$('#button2').click(function(){
+		document.getElementById ("lockedMessage").style.display = "none";
+		document.getElementById ("question1").style.display = "block";
+	});
+	$('#button3').click(function(){
+		var answer1 = document.getElementById ("answer1").value;
+		if (answer1.toLowerCase() == "wash") {
+			document.getElementById ("question1").style.display = "none";
+			document.getElementById ("question2").style.display = "block";
+		}
+	});
+	$('#button4').click(function(){
+		var answer2 = document.getElementById ("answer2").value;
+		if (answer2.toLowerCase() == "b97-x114") {
+			document.getElementById ("question2").style.display = "none";
+			document.getElementById ("question3").style.display = "block";
+		}
+	});
+	$('#button5').click(function(){
+		var answer3 = document.getElementById ("answer3").value;
+		if (answer3.toLowerCase().includes("hitchhikers") || answer3.toLowerCase() == "a hitchikers guide to the galaxy" || answer3.toLowerCase().includes("douglas adams")) {
+			document.getElementById ("question3").style.display = "none";
+			document.getElementById ("recoveredPassword").style.display = "block";
+			document.getElementById ("lockScreen").style.display = "block";
+			document.getElementById ("image").style.display = "block";
+			localStorage.setItem("computerAttempts", "0");
+			recovered = true;
+		}
+	});
+
+	function revealAnswer () {
+		document.getElementById ("recoveredPassword").style.display = "none";
+		document.getElementById ("lockScreen").style.display = "none";
+		document.getElementById ("image").style.display = "none";
+		document.getElementById ("loggedIn").style.display = "block";
+	}
+
+};
+</script>
+<body style="background-color:black;">
+	<img src="../images/shipImage.png" id="image" style="width:400px; heght:300px; left:200px; top:100px; position:absolute;">
+	<div id="lockScreen" style="font-family:Digital7; color:white; background-color:black; font-size:20pt; position:absolute; left:300px; top:400px;">
+		<input type="text" id="username" placeholder="UserId.." style="border-radius: 4px;">
+		<br>
+		<input type="text" id="password" placeholder="Password.." style="border-radius: 4px;">
+		<br>
+		<input type="button" id="button" style="border-radius: 4px; position:absolute; left:65px; top:70px;" value="Login">
+		<p id="attempts" style="position:absolute; left:30px; top:100px;">
+	</div>
+	<div id="lockedMessage" style="font-family:Digital7; color:white; background-color:black; font-size:20pt; position:absolute; left:50px; top:200px; display:none;">
+		<p> You have been locked out. You must now answer the password recovery questions to retrieve your password.
+		<input type="button" id="button2" style="border-radius: 4px; position:absolute; left:150px; top:200px;" value="Really?">
+	</div>
+	<div id="question1" style="font-family:Digital7; color:white; background-color:black; font-size:20pt; position:absolute; left:50px; top:200px; display:none;">
+		<p> Yes Really! Here are your recovery questions...
+		<p> 1) Whats the name of my favourite pet?
+		<br>
+		<input type="text" id="answer1" style="border-radius: 4px;">
+		<input type="button" id="button3" style="border-radius: 4px; position:absolute; left:150px; top:200px;" value="Submit">
+	</div>
+	<div id="question2" style="font-family:Digital7; color:white; background-color:black; font-size:20pt; position:absolute; left:50; top:200px; display:none;">
+		<p> 2) What is the engine model number of the effigy?
+		<br>
+		<input type="text" id="answer2" style="border-radius: 4px;">
+		<input type="button" id="button4" style="border-radius: 4px; position:absolute; left:150px; top:200px;" value="Submit">
+	</div>
+	<div id="question3" style="font-family:Digital7; color:white; background-color:black; font-size:20pt; position:absolute; left:50px; top:200px; display:none;">
+		<p> 3) What is my favorite book?
+		<br>
+		<input type="text" id="answer3" style="border-radius: 4px;">
+		<input type="button" id="button5" style="border-radius: 4px; position:absolute; left:150px; top:200px;" value="Submit">
+	</div>
+	<div id="recoveredPassword" style="font-family:Digital7; color:white; background-color:black; font-size:20pt; position:absolute; left:50px; top:50px; display:none;">
+		<p> Thanks Owen. You're password is Effigy123
+	</div>
+	<div id="loggedIn" style="font-family:Digital7; color:white; background-color:black; font-size:20pt; position:absolute; left:50px; top:200px; display:none;">
+		<p> The shuttle launch code is:
+		<br>
+		<br>
+		<p> 554211179
+		<br>
+		<button onclick="self.close()" id="closeButton">Shut Down</button>
+	</div>
+</body>
+</html>

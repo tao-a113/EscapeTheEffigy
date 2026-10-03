@@ -1,0 +1,1 @@
+start chrome --disable-web-security --allow-file-access-from-files --app="%cd%/data/startPage.html"

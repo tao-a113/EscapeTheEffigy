@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="javascript.js"></script>
+    <link rel="stylesheet" href="stylesheet.css">
+
+    <title>The Effigy - Escape Room v1.0</title>
+</head>
+<script>
+
+window.addEventListener("storage", function () {
+    var fruitTimer = localStorage.getItem("fruitTimer");
+	var animalTimer = localStorage.getItem("animalTimer");
+	
+	var takeOff = localStorage.getItem("takeOff");
+	
+	if (fruitTimer == "30") {
+		setTimeout(function(){localStorage.setItem("fruitTimer", "0");}, 30000);
+	}
+	if (animalTimer == "30") {
+		setTimeout(function(){localStorage.setItem("animalTimer", "0");}, 30000);
+	}
+	
+	if (takeOff == "true") {
+		window.location.href='victoryPage.html';
+	}
+	
+}, false);
+
+	$(document).ready (function() {
+
+		var role = localStorage.getItem("role");
+
+		// these should be moved to prev page eventually
+		localStorage.setItem("isElectricLightPuzzleComplete", "false");
+		localStorage.setItem("isElevatorPuzzleComplete", "false");
+		localStorage.setItem("computerAttempts", "0");
+		localStorage.setItem("treeStage", "0");
+		
+		//timers
+		localStorage.setItem("fruitTimer", "0");
+		localStorage.setItem("animalTimer", "0");
+		
+		localStorage.setItem("isShuttleGotOxygen", "false");
+		localStorage.setItem("isEngineOff", "false");
+		localStorage.setItem("isSuitsReady", "false");
+		localStorage.setItem("isWearingSuit", "false");
+		localStorage.setItem("gotBlacklight", "false");
+		localStorage.setItem("gotKeyFromAnimal", "false");
+		localStorage.setItem("isShuttleBayGotOxygen", "false");
+		localStorage.setItem("lifeSupportUnlocked", "false");
+		localStorage.setItem("shuttleBayRoomCondition", "broken");
+		localStorage.setItem("isShuttleGotMedicine", "false");
+		localStorage.setItem("isShuttleGotPower", "false");
+		localStorage.setItem("blastDoorsFixed1", "false");
+		localStorage.setItem("blastDoorsFixed2", "false");
+		localStorage.setItem("isChomperRoomUnlocked", "false");
+		localStorage.setItem("isTransporterFixed", "false");
+		localStorage.setItem("isShuttleGotFood", "false");
+		localStorage.setItem("isToolsTransported", "false");
+		localStorage.setItem("gotTools", "false");
+		localStorage.setItem("takeOff", "false");
+		localStorage.setItem("handScanner", "false");
+		localStorage.setItem("secretFound", "false");
+
+		var startingRoom = null;
+
+		if (role == "Officer") {
+			startingRoom = "bridgeRoom";
+			sessionStorage.setItem("room", "bridge");
+		}
+		if (role == "Engineer") {
+			startingRoom = "engineRoom";
+			sessionStorage.setItem("room", "engine");
+		}
+		if (role == "Passenger") {
+			startingRoom = "cabinRoom";
+			sessionStorage.setItem("room", "cabin");
+		}
+
+		loadDeferredIframe (startingRoom);
+		startTimer();
+	});
+
+	function changeRoom(room) {
+
+		sessionStorage.setItem("previousRoom", sessionStorage.getItem("room"));
+
+		if (room == "bridgeRoom") {
+			$(".rooms").hide();
+			$("#elevatorRoomAccess").show();
+			sessionStorage.setItem("room", "bridge");
+		}
+		if (room == "elevatorRoom") {
+			$(".rooms").hide();
+			$("#bridgeRoomAccess").show();
+			$("#upperCorridorRoomAccess").show();
+			sessionStorage.setItem("room", "elevatorRoom");
+		}
+		if (room == "suitRoom") {
+			$(".rooms").hide();
+			$("#upperCorridorRoomAccess").show();
+			sessionStorage.setItem("room", "suitRoom");
+		}
+		if (room == "upperCorridorRoom") {
+			$(".rooms").hide();
+			$("#elevatorRoomAccess").show();
+			$("#suitRoomAccess").show();
+			$("#officersQuartersRoomAccess").show();
+			sessionStorage.setItem("room", "upperCorridorRoom");
+		}
+		if (room == "officersQuartersRoom") {
+			$(".rooms").hide();
+			$("#upperCorridorRoomAccess").show();
+			$("#shuttleBayCorridorRoomAccess").show();
+			
+			sessionStorage.setItem("room", "officersQuartersRoom");
+		}
+		if (room == "engineRoom") {
+			$(".rooms").hide();
+			$("#lowerCorridorRoomAccess").show();
+			sessionStorage.setItem("room", "engine");
+		}
+		if (room == "lowerCorridorRoom") {
+			$(".rooms").hide();
+			$("#engineRoomAccess").show();
+			$("#powerGeneratorRoomAccess").show();
+			$("#lifeSupportRoomAccess").show();
+			
+			if (localStorage.getItem("isChomperRoomUnlocked") == "true") {
+				$("#chomperRoomAccess").show();
+			}
+			
+			sessionStorage.setItem("room", "lowerCorridorRoom");
+		}
+		if (room == "powerGeneratorRoom") {
+			$(".rooms").hide();
+			$("#lowerCorridorRoomAccess").show();
+			$("#shuttleBayCorridorRoomAccess").show();
+			sessionStorage.setItem("room", "powerGeneratorRoom");
+		}
+		if (room == "lifeSupportRoom") {
+
+			var a = localStorage.getItem("lifeSupportUnlocked");
+
+			if (a != "true") {
+
+				document.getElementById("mainFrame").contentWindow.document.getElementById("roomResponseText").innerText = "";
+				var text = "This room seems to be locked shut";
+				setTypeWriter();
+				typeWriterChild (text);
+
+				popupWindow = window.open(
+					"popups/popupLockedRoom.html",'popUpWindow','height=800,width=800,left=300,top=200,resizable=no,scrollbars=no,toolbar=no,menubar=no,location=no,directories=no,status=yes'
+				)
+				return;
+			}
+
+
+			$(".rooms").hide();
+			$("#lowerCorridorRoomAccess").show();
+			sessionStorage.setItem("room", "lifeSupportRoom");
+		}
+		if (room == "chomperRoom") {
+			$(".rooms").hide();
+			$("#lowerCorridorRoomAccess").show();
+			$("#computerCoreRoomAccess").show();
+			sessionStorage.setItem("room", "chomperRoom");
+		}
+		if (room == "computerCoreRoom") {
+			$(".rooms").hide();
+			$("#chomperRoomAccess").show();
+			sessionStorage.setItem("room", "computerCoreRoom");
+		}
+		if (room == "cabinRoom") {
+			$(".rooms").hide();
+			$("#centralCorridorRoomAccess").show();
+			sessionStorage.setItem("room", "cabin");
+		}
+		if (room == "centralCorridorRoom") {
+			$(".rooms").hide();
+			$("#cabinRoomAccess").show();
+			$("#medicalBayRoomAccess").show();
+			$("#airLockRoomAccess").show();
+			$("#cargoBayRoomAccess").show();
+			sessionStorage.setItem("room", "centralCorridorRoom");
+		}
+		if (room == "medicalBayRoom") {
+			$(".rooms").hide();
+			$("#centralCorridorRoomAccess").show();
+			sessionStorage.setItem("room", "medicalBayRoom");
+		}
+		if (room == "airLockRoom") {
+			$(".rooms").hide();
+			$("#centralCorridorRoomAccess").show();
+			sessionStorage.setItem("room", "airLockRoom");
+		}
+		if (room == "outsideRoom") {
+			$(".rooms").hide();
+			sessionStorage.setItem("room", "outsideRoom");
+		}
+		if (room == "cargoBayRoom") {
+			$(".rooms").hide();
+			$("#centralCorridorRoomAccess").show();
+			$("#shuttleBayCorridorRoomAccess").show();
+			sessionStorage.setItem("room", "cargoBayRoom");
+		}
+		if (room == "shuttleBayCorridorRoom") {
+
+
+			var suit = localStorage.getItem("isWearingSuit");
+			var condition = localStorage.getItem("shuttleBayRoomCondition");
+
+			if (condition == "fixed") {
+
+				$(".rooms").hide();
+				$("#cargoBayRoomAccess").show();
+				$("#officersQuartersRoomAccess").show();
+				$("#powerGeneratorRoomAccess").show();
+				$("#shuttleRoomAccess").show();
+				localStorage.setItem("room", "shuttleBayCorridorRoom");
+
+			} else if (suit != "true" && condition == "noOxygen"){
+
+				document.getElementById("mainFrame").contentWindow.document.getElementById("roomResponseText").innerText = "";
+				var text = "This room seems to be depressurised completely. You will need to be in a space suit or the room needs to be repressurised with oxygen.";
+				setTypeWriter();
+				typeWriterChild (text);
+				return;
+
+			} else if (suit != "true" && condition != "fixed"){
+
+				document.getElementById("mainFrame").contentWindow.document.getElementById("roomResponseText").innerText = "";
+				var text = "This room seems to be depressurised completely. You will need to be in a space suit to enter here.";
+				setTypeWriter();
+				typeWriterChild (text);
+				return;
+
+			} else if (suit == "true" && condition != "fixed") {
+
+				$(".rooms").hide();
+				$("#shuttleRoomAccess").show();
+				$("#officersQuartersRoomAccess").show();
+				sessionStorage.setItem("room", "shuttleBayCorridorRoom");
+			}
+
+		}
+		if (room == "shuttleRoom") {
+			$(".rooms").hide();
+			$("#shuttleBayCorridorRoomAccess").show();
+			sessionStorage.setItem("room", "shuttleRoom");
+		}
+		console.log ("you are now in the " + room);
+        loadDeferredIframe (room);
+    };
+
+    function loadDeferredIframe(room) {
+
+        var iframe = document.getElementById("mainFrame");
+        iframe.src = "./" + room + ".html";
+		iframe.focus ();
+    };
+	
+</script>
+
+<div id="header">
+    <div class="logo">
+        <img src="images/shipImage.png" style="width:130px;height:100px;float: left"/>
+    </div>
+    <div>
+    	<span id="time">60:00</span>
+    </div
+    <br>
+    <h3 class="horizontal-center">The Effigy</h3>
+</div>
+
+<div class="sidenav">
+  <br><br><br><br>
+  <a href="#bridge" onClick = "changeRoom('bridgeRoom');" id="bridgeRoomAccess" class="rooms" style="display: none">Bridge</a>
+  <a href="#cabin" onClick = "changeRoom('cabinRoom');" id="cabinRoomAccess" class="rooms" style="display: none">Cabin</a>
+  <a href="#engine" onClick = "changeRoom('engineRoom');" id="engineRoomAccess" class="rooms" style="display: none">Engine</a>
+  <a href="#shuttle" onClick = "changeRoom('shuttleRoom');" id="shuttleRoomAccess" class="rooms" style="display: none">Shuttle</a>
+  <a href="#upperCorridor" onClick = "changeRoom('upperCorridorRoom');" id="upperCorridorRoomAccess" class="rooms" style="display: none">Corridor</a>
+  <a href="#lowerCorridor" onClick = "changeRoom('lowerCorridorRoom');" id="lowerCorridorRoomAccess" class="rooms" style="display: none">Corridor</a>
+  <a href="#centralCorridor" onClick = "changeRoom('centralCorridorRoom');" id="centralCorridorRoomAccess" class="rooms" style="display: none">Corridor</a>
+  <a href="#elevatorRoom" onClick = "changeRoom('elevatorRoom');" id="elevatorRoomAccess" class="rooms" style="display: none">Elelvator</a>
+  <a href="#suitRoom" onClick = "changeRoom('suitRoom');" id="suitRoomAccess" class="rooms" style="display: none">Changing Room</a>
+  <a href="#officersQuartersRoom" onClick = "changeRoom('officersQuartersRoom');" id="officersQuartersRoomAccess" class="rooms" style="display: none">Officers Quarters</a>
+  <a href="#lifeSupportRoom" onClick = "changeRoom('lifeSupportRoom');" id="lifeSupportRoomAccess" class="rooms" style="display: none">Life Support</a>
+  <a href="#powerGeneratorRoom" onClick = "changeRoom('powerGeneratorRoom');" id="powerGeneratorRoomAccess" class="rooms" style="display: none">Power Generator</a>
+  <a href="#chomperRoom" onClick = "changeRoom('chomperRoom');" id="chomperRoomAccess" class="rooms" style="display: none">Chomper Room</a>
+  <a href="#computerCoreRoom" onClick = "changeRoom('computerCoreRoom');" id="computerCoreRoomAccess" class="rooms" style="display: none">Computer Core</a>
+  <a href="#medicalBayRoom" onClick = "changeRoom('medicalBayRoom');" id="medicalBayRoomAccess" class="rooms" style="display: none">Medical Bay</a>
+  <a href="#airLockRoom" onClick = "changeRoom('airLockRoom');" id="airLockRoomAccess" class="rooms" style="display: none">Air Lock</a>
+  <a href="#outside" onClick = "changeRoom('outsideRoom');" id="outsideRoomAccess" class="rooms" style="display: none">Space</a>
+  <a href="#cargoBayRoom" onClick = "changeRoom('cargoBayRoom');" id="cargoBayRoomAccess" class="rooms" style="display: none">Cargo Bay</a>
+  <a href="#shuttleBayCorridorRoom" onClick = "changeRoom('shuttleBayCorridorRoom');" id="shuttleBayCorridorRoomAccess" class="rooms" style="display: none">Shuttle Bay Corridor</a>
+</div>
+<body>
+
+<audio id="audio">
+  <source src="sounds/rumble.wav" type="audio/mpeg">
+</audio>
+
+
+	<div class="main">
+		<iframe id="mainFrame" class="iFrame" src="about:blank" scrolling="no"></iframe>
+	</div>
+</body>
+</html>
+
+<script>
+
+const audioContext = new AudioContext();
+
+async function playLoop(url, crossfadeSeconds = 3) {
+  const response = await fetch(url, {mode: 'no-cors'});
+  const arrayBuffer = await response.arrayBuffer();
+  const buffer = await audioContext.decodeAudioData(arrayBuffer);
+
+  const duration = buffer.duration;
+
+  function createSource(startTime, offset, gainStart, gainEnd) {
+    const source = audioContext.createBufferSource();
+    const gain = audioContext.createGain();
+
+    source.buffer = buffer;
+    source.connect(gain);
+    gain.connect(audioContext.destination);
+
+    gain.gain.setValueAtTime(gainStart, startTime);
+    gain.gain.linearRampToValueAtTime(gainEnd, startTime + crossfadeSeconds);
+
+    source.start(startTime, offset);
+
+    return source;
+  }
+
+  // Start the first copy at full volume.
+  let nextStart = audioContext.currentTime + 0.05;
+
+  let source = audioContext.createBufferSource();
+  let gain = audioContext.createGain();
+
+  source.buffer = buffer;
+  source.connect(gain);
+  gain.connect(audioContext.destination);
+  gain.gain.setValueAtTime(1, nextStart);
+  source.start(nextStart);
+
+  while (true) {
+    // Start the next copy slightly before the previous one ends.
+    const nextLoopStart =
+      nextStart + duration - crossfadeSeconds;
+
+    const nextSource = audioContext.createBufferSource();
+    const nextGain = audioContext.createGain();
+
+    nextSource.buffer = buffer;
+    nextSource.connect(nextGain);
+    nextGain.connect(audioContext.destination);
+
+    // New copy fades in.
+    nextGain.gain.setValueAtTime(0, nextLoopStart);
+    nextGain.gain.linearRampToValueAtTime(
+      1,
+      nextLoopStart + crossfadeSeconds
+    );
+
+    // Current copy fades out.
+    gain.gain.setValueAtTime(1, nextLoopStart);
+    gain.gain.linearRampToValueAtTime(
+      0,
+      nextLoopStart + crossfadeSeconds
+    );
+
+    nextSource.start(nextLoopStart);
+
+    source = nextSource;
+    gain = nextGain;
+    nextStart = nextLoopStart;
+
+    // Don't actually use an infinite synchronous loop!
+    // Scheduling must happen asynchronously.
+    await new Promise(resolve =>
+      setTimeout(resolve, (duration - crossfadeSeconds) * 1000)
+    );
+  }
+}
+
+playLoop("sounds/rumble.wav", 0.15);
+	
+</script>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <title>The Effigy - Escape Room v1.0</title>
+</head>
+
+<style>
+@font-face { font-family: SpaceAge; src: url('../space_age/space age.ttf'); } 
+.centered {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor:pointer;
+}
+.verticalLine {
+	border: .5px dashed black;
+	bottom: 0px;
+	left: 50%;
+	position: absolute;
+	top: 0px;
+	width: .1px;
+}
+</style>
+<script>
+$( document ).ready(function() {
+	var position = 0;
+	var book = 2;
+	$('#left').bind('click', function(){
+		if (position > 0) {
+			position = position - 1;
+			turnPage();
+		}
+
+	});
+	$('#right').bind('click', function(){
+		if (position < 10) {
+			position = position + 1;
+			turnPage();
+		}
+	});
+
+	$('.book').bind('click', function(){
+
+		var id = this.id;
+
+
+		if (id == "book2") book = 2;
+		if (id == "book3") book = 3;
+
+
+		position = 0;
+		turnPage();
+	});
+
+	function turnPage() {
+
+		if (position == 0) {
+			$("#line").hide();
+		} else {
+			$("#line").show();
+		}
+		$(".page").hide();
+		$("#book" + book + "p" + position).show();
+	}
+
+});
+</script>
+
+<body style="background-color:black; color:black;font-size:16pt;">
+
+	<div style="width:40%; height:50%; border:5px solid brown; background-color:OldLace;" class="centered">
+
+		<div id="book2p0" class="page">(The front page of this book is missing from over use)</div>
+		<div id="book2p1" class="page" style="display:none;">The house stood on a slight rise just on the edge of the village. It stood on its own and looked out over a broad spread of West Country farmland. Not a remarkable house by any means—it was about thirty years old, squattish, squarish, made of brick, and had four windows set in the front of a size and proportion which more or less exactly failed to please the eye.</div>
+		<div id="book2p2" class="page" style="display:none;">The only person for whom the house was in any way special was Arthur Dent, and that was only because it happened to be the one he lived in. He had lived in it for about three years, ever since he had moved out of London because it made him nervous and irritable. He was about thirty as well, tall, dark-haired and never quite at ease with himself. The thing that used</div>
+		<div id="book2p3" class="page" style="display:none;">to worry him most was the fact that people always used to ask him what he was looking so worried about. He worked in local radio which he always used to tell his friends was a lot more interesting than they probably thought. It was, too—most of his friends worked in advertising. On Wednesday night it had rained very heavily, the lane was wet and muddy, but the Thursday</div>
+		<div id="book2p4" class="page" style="display:none;">morning sun was bright and clear as it shone on Arthur Dent’s house for what was to be the last time. It hadn’t properly registered yet with Arthur that the council wanted to knock it down and build a bypass instead.</div>
+
+		<div id="book3p0" class="page" style="display:none; font-size:24pt; font-family:SpaceAge;">The Joy of Botany - Alan Biggs</div>
+		<div id="book3p1" class="page" style="display:none;">The art of proper Botany can be one of the most fulfilling of that in ones lifetime. In this book I will hope to show some of the joy you have have with the wondrous plants of the Blump-um solor system.</div>
+		<div id="book3p2" class="page" style="display:none;">Blystanephus <br><br> Blystanephus is a large plant origanating from the Dakiam planet. Scientists study this plant for its unique property to grow at such rapid speeds. It's only know predetaor the Dakiam beast is the sole reason the plant doesn't cover the entire planet. With this mind, it is important to note to not try</div>
+		<div id="book3p3" class="page" style="display:none;">to grow your own Blystanephus at home as the vines are stronger than every bone in your body. The only thing worse than this would be to then invite a Dakiam beast to your home to solve the issue, as they eat pretty much anything. Anyway, lets just say Dakium is no longer the only planet with soley these two inhabitants.</div>
+		<div id="book3p4" class="page" style="display:none;">The Bissalium <br><br> The Bissalium is a beautiful plant with the wonderous ability to produce large quantities of oxygen when all of it's leaves are red. Popularly used in space ships to provide boosts of oxygen to rooms when needed. However the Bissalium requires a complex set of ingredients to achieve this. Start with a solution</div>
+		<div id="book3p5" class="page" style="display:none;">of sulphur, potassium and a double dose of hydrogen peroxide. Now the fun begins. You will then need a drop of water for every brown leaf, however if a plant has three brown leaves then you need 3 doses of sulpher. Two doses of salt for every orange leaf. For every two blue leaves, you will need some potassium. If the plant contains pink and white</div>
+		<div id="book3p6" class="page" style="display:none;">leaves add some sulpher, otherwise add magnesium for a pink leaf. If a plant contains a red and a blue leaf, ignore everything before and add all hydrogen peroxide. Well that was a data dump eh? Mind you, these plants are beautiful in some south galactic planet climates and are totally worth all the effort.</div>
+		<div id="book3p7" class="page" style="display:none;">Cronianstaphy <br><br>Cronianstaphy is the latest in a long line of human-made plants that have been genetically created to solve the solar systems growing hunger problem. These plants create a high amount of satta fruits which i'm sure you are all aware due to it's large distribution, is tasy and high in protein. However, you may not know eating one of these fruits  gives a</div>
+		<div id="book3p8" class="page" style="display:none;">1 in 500,000,000 chance to instantly mutate you into a Cronianstaphy plant yourself. This has caused large galactic debate on using the plant as its saved billions from hunger at the cost of a few people here and there turing into plants. This caused a perticular wave of debate when both the lead protester for the feed hungry charity and his wife turned into plants. Scientists</div>
+		<div id="book3p9" class="page" style="display:none;">have since taken the two labs. Comments from the health first commitee stated that the two should be checked for pesticides.</div>
+
+
+		<div id="line" class="verticalLine" style="display:none;"></div>
+
+	</div>
+
+	<input id="left"   type="image" src="../images/leftArrow.png" style="top:65%; left:40%; height:50px; width:50px; transform: translate(-50%, -50%); position: absolute;"/>
+	<input id="right" type="image" src="../images/rightArrow.png" style="top:65%; left:60%; height:50px; width:50px; transform: translate(-50%, -50%); position: absolute;"/>
+
+	<div id="books">
+		<input id="book2" class="book" type="image" src="../images/book2.png" style="top:80%; left:45%; height:50px; width:50px; transform: translate(-50%, -50%); position: absolute;"/>
+		<input id="book3" class="book" type="image" src="../images/book3.png" style="top:80%; left:55%; height:50px; width:50px; transform: translate(-50%, -50%); position: absolute;"/>
+	</div>
+
+</body>
+</html>

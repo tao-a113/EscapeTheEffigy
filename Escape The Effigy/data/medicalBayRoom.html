@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="javascript.js"></script>
+    <link rel="stylesheet" href="stylesheet.css">
+
+    <title>The Effigy - Escape Room v1.0</title>
+</head>
+
+<style>
+#medicalBayBody  {
+  background-image: url("images/medlab.jpg");
+  background-repeat: no-repeat;
+  position: absolute;
+  background-size: cover;
+  height: 770px; width:1250px;
+}
+#medicalBayBody2  {
+  background-image: url("images/medlab2.jpg");
+  background-repeat: no-repeat;
+  position: absolute;
+  background-size: cover;
+  height: 770px; width:1250px;
+  clip-path:url(#clip);
+}
+.buttons:focus {
+  outline: none;
+  box-shadow: none;
+}
+.a {
+  opacity:0.4;
+}
+.buttons:hover  {
+    -webkit-filter: drop-shadow(2px 1px 0 yellow)
+    				  drop-shadow(-1px -1px 0 yellow);
+    filter: drop-shadow(2px 1px 0 yellow)
+  		  drop-shadow(-1px -1px 0 yellow);
+}
+</style>
+
+<script>
+$( document ).ready(function() {
+
+	$('#button1').click(function(){
+			document.getElementById("roomResponseText").innerText = "";
+			var text = "You can send medical supplies to the shuttle from here.";
+			setTypeWriter();
+			typeWriter (text);
+			
+			popupWindow = window.open(
+				"popups/popupMedicalComputer.html",'popUpWindow','height=800,width=800,left=50,top=50,resizable=no,scrollbars=no,toolbar=no,menubar=no,location=no,directories=no,status=yes'
+			)
+	});
+	
+	$('#button2').click(function(){
+			document.getElementById("roomResponseText").innerText = "";
+			var text = "An array of chemicals are present.";
+			setTypeWriter();
+			typeWriter (text);
+			
+			popupWindow = window.open(
+				"popups/popupFix02_medical.html",'popUpWindow','height=800,width=800,left=50,top=50,resizable=no,scrollbars=no,toolbar=no,menubar=no,location=no,directories=no,status=yes'
+			)
+	});
+	$('#button3').click(function(){
+			document.getElementById("roomResponseText").innerText = "";
+			var text = "You find a blacklight. You may be able to use it in some of the nearby rooms by holding shift and pressing the space-bar.";
+			setTypeWriter();
+			typeWriter (text);
+			localStorage.setItem("gotBlacklight", "true");
+	});
+});
+
+let cursor = document.getElementById("lo");
+let circle = document.getElementById("circle");
+
+let setCursorPosition3 = function(e) {
+	var circle = document.getElementById("circle");
+
+	circle.setAttribute('cx',e.clientX);
+	circle.setAttribute('cy',e.clientY);
+};
+document.addEventListener("mousemove", e => setCursorPosition3(e));
+
+function isKeyPressed(event) {
+
+	var gotBlackLight = localStorage.getItem("gotBlacklight");
+	
+	if (event.shiftKey && gotBlackLight == "true") {
+		$("#lo").toggle ();
+		$("#medicalBayBody2").toggle ();
+		$(".buttons").toggle ();
+		$("#medicalBayBody").toggleClass( "a" );			
+	}
+}
+
+</script>
+
+<body onkeyup="isKeyPressed(event)">
+	<div id="medicalBayBody">
+		<input id="button1" class="buttons" type="image" src="images/medicalLabButton1.png" style="top:325px; left:175px; height:100px; width:172px; position:absolute;"/>
+		<input id="button2" class="buttons" type="image" src="images/medicalLabButton2.png" style="top:325px; left:1110px; height:125px; width:145px; position:absolute;"/>
+	</div>
+	<div id="medicalBayBody2" style="display:none;">
+		<svg id="lo" width="100%" height="100%" style="display:none;">
+			<clippath id="clip">
+				<circle id="circle" cx="50" cy="50" r="50"/>
+			</clippath>
+		</svg>
+	</div>
+
+	<div id="roomDescription" class="roomDescription">
+		<p id="roomDescriptionText" style="width:370px; height:300px; margin-left:20px; margin-top:30px; top:47px; left:48px; position:relative;">
+			You are in the medical bay. This room will contain the medical supplies for the ship. There is also a basic chemical kit.
+		</p>
+	</div>
+
+	<br><br>
+
+	<div id="roomResponses" class="roomResponses">
+		<p id="roomResponseText" style="width:360px; height:300px; margin-left:20px; margin-top:30px; top:80px; left:63px; position:relative;"></p>
+	</div>
+	
+	<input id="button3" class="buttons" type="image" src="images/medicalLabButton3.png" style="top:440px; left:1180px; height:200px; width:85px; position:absolute;"/>
+	
+</body>
+	<div class="console">
+		<input style="margin-top:40px; margin-left:40px" type="text" id="console">
+		<input style="margin-top:40px;" type="submit" value="Update System" id="consoleButton">
+		<input style="margin-top:10px; height:70px; width:600px; margin-left:70px" type="textarea" id="consoleArea">
+	</div>
+</html>

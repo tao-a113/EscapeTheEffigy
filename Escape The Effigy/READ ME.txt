@@ -1,0 +1,17 @@
+Welcome to the escape the Effigy escape room
+
+follow these steps to get set up
+
+1. Go to https://drive.google.com/drive/folders/1wMQ0AqyFEEXh5dzuNsTnwxpHBdUoYZ6S?usp=sharing
+
+2. Right click the folder called "Escape Room (download me)" and download it
+
+3. Find the downloaded zip folder in your downloads directory
+
+4. Right click the folder and choose "extract all" option. 
+
+close all chrome tabs and windows before you do step 5 and 6. This is very important.
+
+5. Go into the new folder that you have just extracted. Then click the "run escape room in chrome.bat" file
+
+6. An error should appear. That's fine, click on the "more info" option and then click "run anyway"

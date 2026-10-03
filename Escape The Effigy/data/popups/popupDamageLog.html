@@ -1,0 +1,79 @@
+<html>
+<link rel="stylesheet" href="../stylesheet.css">
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<title>Damage Control</title>
+
+<script>
+	$( document ).ready(function() {
+	
+		var power = localStorage.getItem("isShuttleGotPower");
+		var engine = localStorage.setItem("isEngineOff", "false");
+		
+		var power2;
+		var engine2;
+		
+		if (power=="true") {
+			power = "8";
+			power2 = "Active";
+		}else{
+			power = "0"
+			power2 = "Offline";
+		}
+		
+		if (engine=="true") {
+			engine = "0"
+			engine2 = "Offline";
+		}else{
+			engine = "8"
+			engine2 = "Active";
+		}
+
+
+		$("#shuttle").html(power);
+		$("#engine").html(engine);
+		
+		$("#shuttle2").html(power2);
+		$("#engine2").html(engine2);
+		
+	});
+
+</script>
+
+<body>
+	<div style="position:relative; font-family:Digital7;">
+	<img id="bridgeDamageLogImage" src="../images/textUI1.jpg" alt="" />
+		<table id="bridgeDamageLogTable">
+			<tr>
+				<th>System<th>
+				<th>Power<th>
+				<th>Status<th>
+			</tr>
+			<tr>
+				<td>Weapons<td>
+				<td>0<td>
+				<td>Damaged<td>
+			</tr>
+			<tr>
+				<td>Shields<td>
+				<td>0<td>
+				<td>Damaged<td>
+			</tr>
+			<tr>
+				<td>Engines<td>
+				<td id="engine"><td>
+				<td id="engine2"><td>
+			</tr>
+			<tr>
+				<td>Shuttle<td>
+				<td id="shuttle"><td>
+				<td id="shuttle2"><td>
+			</tr>
+		</table>
+	<div>
+
+	<br><br>
+
+	<button onclick="self.close()" id="bridgeDamageLogButton">Close</button>
+
+</body>
+</html>

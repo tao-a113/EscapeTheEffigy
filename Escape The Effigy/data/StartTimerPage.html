@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="javascript.js"></script>
+    <link rel="stylesheet" href="stylesheet.css">
+
+    <title>The Effigy - Escape Room v1.0</title>
+</head>
+<script>
+$(document).ready (function() {
+
+	var role = localStorage.getItem("role");
+	console.log (role);
+
+	if (role == "Officer") {
+		$("#OfficerStartingText").show();
+	}
+	if (role == "Engineer") {
+		$("#EngineerStartingText").show();
+	}
+	if (role == "Passenger") {
+		$("#PassenegerStartingText").show();
+	}
+
+    $("#start").on ("click", function () {
+
+        window.location.href='gameFrame.html';
+    });
+
+});
+</script>
+<div id="header">
+    <div class="logo">
+        <img src="images/shipImage.png" style="width:130px;height:100px;float: left"/>
+    </div>
+
+	<br>
+
+    <h3 class="horizontal-center">The Effigy</h3>
+</div>
+<body>
+	<br><br><br><br>
+
+	<div class="border">
+	<p> The Effigy has been attacked and taken substantial damage. But who attacked and what did they want? Without life support systems active, you and the rest of the crew will need to evacuate the ship before you run out of air. You will have to work with the other ship members to get all of you to the escape shuttle. Only then should you launch the shuttle. Or will you launch without everyone present?
+	<p> The ship has lost power to many of its systems. Make sure you communicate and turn on the systems required. You don't have very long. Some puzzles may not be able to be completed initially, or can't be completed at all without help from others.
+	<p id="OfficerStartingText" style="display: none"> You are playing the officer. You start on bridge of the ship.
+	<p id="EngineerStartingText" style="display: none"> You are playing the engineer. You start in the engine bay.
+	<p id="PassenegerStartingText" style="display: none"> You are playing the passenger. You start in your cabin.
+	<p> Please make sure you closed all other chrome tabs before opening this or the escape room will not work.
+	<p> Please do not refresh the screen at any time. There is no puzzle that involves doing this. This will just break the game.
+	<p> The developer has hidden an easter egg on the ship. Can you find it?
+	<p> You will need to update the ship throughout the escape room. It is important that whenever someone else finds an update code that you put in into the ships console at the bottom of the screen as soon as possible. It may help with your puzzle. Update codes will always start with a hashtag # followed by a combination of numbers and sometimes dashes.
+	<p> Try not to click many buttons too quickly. This ships damaged systems can't take it.
+	<p> When everyone is ready to start, all press the start button below at the same time to start the escape room.
+	</div>
+
+	<br><br>
+
+	<button id="start" class="classButton horizontal-center">Start</button>
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+<html>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="stylesheet.css">
+<head>
+</head>
+<script>
+
+window.onload = function(){
+
+};
+	function go () {
+		$('#fruit').show ();
+		$('#start').toggle ();
+		localStorage.setItem("fruitTimer", "30");
+		setTimeout(closing, 2500);
+	}
+
+	function closing () {
+		window.close();
+	}
+
+
+
+function isMousePressed(event) {
+	go ();
+};
+
+</script>
+<body style="background-color:black; font-family:Digital7; color:black;font-size:12pt;" onmouseup="isMousePressed(event)">
+
+	<p id="start" style="color:white; left:200px; top:250px; height:30px; width:400px; position:absolute;">The fruit is covered by protective wrapping and can only be briefly looked at to avoid contamination. You will not be able to look again for another 30 seconds.</p>
+	<p id="start" style="color:white; left:250px; top:400px; height:30px; width:350px; position:absolute;">Click anywhere to view fruit</p>
+	<img src="../images/fruit.jpg" id="fruit" style="width:75%; left:100px; top:10px; position:absolute; display:none;"/>
+
+</body>
+</html>

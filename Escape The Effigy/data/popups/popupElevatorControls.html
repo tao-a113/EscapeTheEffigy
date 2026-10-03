@@ -1,0 +1,204 @@
+<html>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<head>
+</head>
+<style>
+@font-face { font-family: Digital7; src: url('../digital-7/digital-7.ttf'); } 
+@keyframes slide {
+  from { left: 100%;}
+  to { left: -100%;}
+}
+@-webkit-keyframes slide {
+  from { left: 100%;}
+  to { left: -100%;}
+}
+
+#marquee { 
+  color:red; 
+  background:black;
+  width:100%;
+  height:120px;
+  line-height:120px;
+  overflow:hidden;
+  position:relative;
+}
+
+#text {
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:120px;
+  font-size:30px;
+  animation-name: slide;
+  animation-duration: 10s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  -webkit-animation-name: slide;
+  -webkit-animation-duration: 10s;
+  -webkit-animation-timing-function:linear;
+  -webkit-animation-iteration-count: infinite;
+}
+</style>
+<script>
+
+// Knob angle
+var angle = 0;
+var angle2 = 0;
+
+
+var attempt;
+var correctAnswers;
+
+window.onload = function(){
+
+attempt = 1;
+correctAnswers = 0;
+
+	$('.button1').click(function(){
+		$(this).find( '#image1' ).attr('src','../images/UIBlueButtonSelected.png');
+		checkCorrectSequence ($(this));
+	});
+	$('.button2').click(function(){
+		$(this).find( '#image1' ).attr('src','../images/UIOrangeButtonSelected.png');
+		checkCorrectSequence ($(this));
+	});
+	$('#button1').click(function(){
+		angle = 0;
+		angle2 = 0;
+		$('.button1').find( '#image1' ).attr('src','../images/UIBlueButton.png');
+		$('.button2').find( '#image1' ).attr('src','../images/UIOrangeButton.png');
+		correctAnswers = 0;
+		attempt = 1;
+	});
+
+	function checkCorrectSequence(thisObj) {
+
+	console.log (thisObj.data("num"));
+
+		if (attempt == 1 && correctAnswers == 0 && thisObj.data("num") == 7) {
+			correctAnswers++;
+		}
+		if (attempt == 2 && correctAnswers == 1 && thisObj.data("num") == 9) {
+			correctAnswers++;
+		}
+		if (attempt == 3 && correctAnswers == 2 && (thisObj.data("num") == 5 || thisObj.data("num") == 8)) {
+			correctAnswers++;
+		}
+		if (attempt == 4 && correctAnswers == 3 && (thisObj.data("num") == 4 || thisObj.data("num") == 11)) {
+			correctAnswers++;
+		}
+		if (attempt == 5 && correctAnswers == 4 && (thisObj.data("num") == 4 || thisObj.data("num") == 11)) {
+			correctAnswers++;
+		}
+		if (attempt == 6 && correctAnswers == 5 && thisObj.data("num") == 3) {
+			correctAnswers++;
+		}
+		if (attempt == 7 && correctAnswers == 6 && thisObj.data("num") == 2) {
+			correctAnswers++;
+		}
+		if (attempt == 8 && correctAnswers == 7 && (thisObj.data("num") == 5 || thisObj.data("num") == 8)) {
+			document.getElementById("answer").innerHTML = "#10191";
+		}
+		attempt++;
+
+	}
+};
+
+
+</script>
+<style>
+
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor:pointer;
+}
+.container {
+  position:relative;
+  text-align:center;
+}
+
+</style>
+<body style="background-color:black;">
+	<div style="font-family: Digital7;color:white; font-size: 16pt;">
+		<table>
+			<tr>
+				<div class="container button1" data-num="1"><input id="image1" data-num="1" type="image" src="../images/UIBlueButton.png" style="top:0px; left:0px; height:50px; width:300px; position:relative"/>
+					<div class="centered" data-num="1">Pantry</div>
+				</div>
+			</tr>
+			<tr>
+				<div class="container button1" data-num="2"><input id="image1" data-num="2" type="image" src="../images/UIBlueButton.png" style="top:0px; left:0px; height:50px; width:300px; position:relative"/>
+					<div class="centered" data-num="2">Dungeon</div>
+				</div>
+			</tr>
+			<tr>
+				<div class="container button1" data-num="3"><input id="image1" data-num="3" type="image" src="../images/UIBlueButton.png" style="top:0px; left:0px; height:50px; width:300px; position:relative"/>
+					<div class="centered" data-num="3">Infirmiry</div>
+				</div>
+			</tr>
+			<tr>
+				<div class="container button1" data-num="4"><input id="image1" data-num="4" type="image" src="../images/UIBlueButton.png" style="top:0px; left:0px; height:50px; width:300px; position:relative"/>
+					<div class="centered" data-num="4">Restroom</div>
+				</div>
+			</tr>
+			<tr>
+				<div class="container button1" data-num="5"><input id="image1" data-num="5" type="image" src="../images/UIBlueButton.png" style="top:0px; left:0px; height:50px; width:300px; position:relative"/>
+					<div class="centered" data-num="5">Elevator</div>
+				</div>
+			</tr>
+			<tr>
+				<div class="container button2" data-num="6"><input id="image1" data-num="6" type="image" src="../images/UIOrangeButton.png" style="top:0px; left:0px; height:50px; width:300px; position:relative"/>
+					<div class="centered" data-num="6">Loading-bay</div>
+				</div>
+			</tr>
+			<tr>
+				<div class="container button1" data-num="7"><input id="image1" data-num="7" type="image" src="../images/UIBlueButton.png" style="top:0px; left:0px; height:50px; width:300px; position:relative"/>
+					<div class="centered" data-num="7">Oxygen</div>
+				</div>
+			</tr>
+			<tr>
+				<div class="container button2" data-num="8"><input id="image1" data-num="8" type="image" src="../images/UIOrangeButton.png" style="top:0px; left:0px; height:50px; width:300px; position:relative"/>
+					<div class="centered" data-num="8">Engineering</div>
+				</div>
+			</tr>
+			<tr>
+				<div class="container button2" data-num="9"><input id="image1" type="image" src="../images/UIOrangeButton.png" style="top:0px; left:0px; height:50px; width:300px; position:relative"/>
+					<div class="centered" data-num="9">Visitors lounge</div>
+				</div>
+			</tr>
+			<tr>
+				<div class="container button1" data-num="10"><input id="image1" data-num="10" type="image" src="../images/UIBlueButton.png" style="top:0px; left:0px; height:50px; width:300px; position:relative"/>
+					<div class="centered" data-num="10">Scullery</div>
+				</div>
+			</tr>
+			<tr>
+				<div class="container button1" data-num="11"><input id="image1" type="image" src="../images/UIBlueButton.png" style="top:0px; left:0px; height:50px; width:300px; position:relative"/>
+					<div class="centered" data-num="11">Rec-room</div>
+				</div>
+			</tr>
+		</table>
+
+		<div>
+			<table style="width: 100%;">
+				<tr>
+					<td>
+						<p id="answer" style="color:white; height:20px; width:100px; position:relative; left:50%; transform:translateX(-50%);">
+					</td>
+					<td>
+						<input id="button1" type="button" value="clear" style="height:30px; width:100px; position:relative; left:50%; transform:translateX(-50%);"/>
+					</td>
+				</tr>
+			</table>
+		</div>
+
+		<div id="marquee">
+			<div id="text">Override Required</div>
+		</div>
+	</div>
+</body>
+</html>

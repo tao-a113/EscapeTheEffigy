@@ -1,0 +1,50 @@
+<html>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="stylesheet.css">
+<head>
+</head>
+<script>
+
+window.onload = function(){
+
+var gotKey = localStorage.getItem("gotKeyFromAnimal");
+if (gotKey == "true") {
+	$('#button1').show ();
+}
+
+
+
+	$('#button1').click(function(){
+		document.getElementById("text").innerHTML = "The medical computer is active and ready to send medical supplies to the shuttle.";
+		$('#button1').hide ();
+		$('#button2').show ();
+	});
+	$('#button2').click(function(){
+		document.getElementById("text").innerHTML = "Medical supplies successfully sent to the shuttle.";
+		document.getElementById("answer").innerHTML = "#01189998819991197253";
+		localStorage.setItem("isShuttleGotMedicine", "true");
+		$('#button2').hide ();
+	});
+};
+
+
+
+</script>
+<body style="background-color:black; font-family:Digital7; color:black;font-size:12pt;">
+
+	<img src="../images/medicalControlPanel.png" id="comp" style="width:75%; left:100px; top:50px; position:absolute;"/>
+	<img src="../images/medicalLock.png" id="lock" style="width:10%; left:490px; top:150px; position:absolute;"/>
+	
+	<div>
+		<p id="text" style="color:white; left:180px; top:400px; height:50px; width:500px; position:absolute;">The computer is locked. It looks like a key is required to turn it on. But the key is missing.
+	</div>
+	<input id="button1" type="button" value="Unlock Computer Using Key" style="left:300px; top:500px; height:30px; width:200px; position:absolute; display:none;"/>
+	<input id="button2" type="button" value="Send Medical Supplies" style="left:310px; top:500px; height:30px; width:200px; position:absolute; display:none;"/>
+	
+	<div>
+		<p id="answer" style="color:white; left:300px; top:580px; height:50px; width:100px; position:absolute;">
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+<html>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<head>
+</head>
+<style>
+@font-face { font-family: BrownBag; src: url('../BrownBagLunch/BrownBagLunch.ttf'); }
+
+.whiteboard {
+	background-color:white;
+	color: red;
+	font-family:BrownBag;
+	border:5pt solid black;
+	border-radius:20pt;
+	width:50%;
+	margin: auto;
+	height:50%;
+	margin-top:10%;
+	text-align: center;
+	font-size: 36pt;
+	position:relative;
+}
+
+</style>
+<script>
+
+$( document ).ready(function() {
+	$('#button1').click(function(){
+		
+		$('#keypad').toggle ();
+		$('#text').toggle ();		
+	})
+});
+
+</script>
+<body style="background-color:grey;">
+
+	<div class="whiteboard">
+		<p id="text" style="display:none;"> Me with Wash and Kaylee <br> 2955 kd</p>
+		<img id="keypad" style="border-radius:20pt;" src="../images/horses.jpg" width="100%">
+		
+		<input type="button" id="button1" class="button" style="width:80px; height:80px; border:none; position:absolute; right:0; bottom:0; background:transparent;">
+		
+	</div>
+		
+</body>

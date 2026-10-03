@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shuttle Status</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+<style>
+@font-face { font-family: Digital7; src: url('../digital-7/digital-7.ttf'); } 
+
+#bridgeDamageLogTable {
+    color: white;
+    position:relative; 
+    top:100; left:120;
+    font-size: 40px;
+	border-spacing: 25px 2px;
+}
+
+#bridgeDamageLogButton {
+    font-size: 12px;
+    padding: 14px 40px;
+    background-color: white; color: black;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 8px;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    position:relative;
+	left: 50%;
+	transform: translate(-50%, 400%);
+}
+
+#bridgeDamageLogImage {
+   display: block;
+   width: 100%;
+   left:0;
+   top:0;
+   position:absolute;
+}
+.centered {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  cursor:pointer;
+}
+
+</style>
+
+<script>
+	$( document ).ready(function() {
+		var o2 = localStorage.getItem("isShuttleGotOxygen");
+		var meds = localStorage.getItem("isShuttleGotMedicine");
+		var food = localStorage.getItem("isShuttleGotFood");
+		var power = localStorage.getItem("isShuttleGotPower");
+		var doors = localStorage.getItem("blastDoorsFixed1");
+		var doors2 = localStorage.getItem("blastDoorsFixed2");
+
+		
+		if (o2=="true") {o2 = "online"}else{o2 = "offline"}
+		if (meds=="true") {meds = "online"}else{meds = "offline"}
+		if (food=="true") {food = "online"}else{food = "offline"}
+		if (power=="true") {power = "online"}else{power = "offline"}
+		
+		if (doors=="true" && doors2 == "true") {doors = "open"}
+		else if (doors=="false" && doors2 == "true") {doors = "partially open"}
+		else if (doors=="true" && doors2 == "false") {doors = "partially open"}else{doors = "closed"}
+		
+		$("#o2").html(o2);
+		$("#meds").html(meds);
+		$("#food").html(food);
+		$("#power").html(power);
+		$("#doors").html(doors);
+
+	});
+</script>
+
+<body style="background-color:black;">
+	<div style="position:relative; font-family:Digital7;">
+	<img id="bridgeDamageLogImage" src="../images/textUI1.jpg" alt="" />
+		<table id="bridgeDamageLogTable" class="centered">
+			<tr>
+				<th>System<th>
+				<td colspan="4"></td>
+				<th>Status<th>
+			</tr>
+			<tr>
+				<td>Power<td>
+				<td colspan="4">    </td>
+				<td id="power"><td>
+			</tr>
+			<tr>
+				<td>0xygen Storage<td>
+				<td colspan="4">    </td>
+				<td id="o2"><td>
+			</tr>
+			<tr>
+				<td>Food Supplies<td>
+				<td colspan="4"></td>
+				<td id="food"><td>
+			</tr>
+			<tr>
+				<td>Medical Supplies<td>
+				<td colspan="4"></td>
+				<td id="meds"><td>
+			</tr>
+			<tr>
+				<td>Blast Doors<td>
+				<td colspan="4"></td>
+				<td id="doors"><td>
+			</tr>
+		</table>
+	<div>
+
+	<br><br>
+
+	<button onclick="self.close()" id="bridgeDamageLogButton">Close</button>
+
+</body>
+</html>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="javascript.js"></script>
+    <link rel="stylesheet" href="stylesheet.css">
+
+    <title>The Effigy - Escape Room v1.0</title>
+</head>
+
+<style>
+#chompersBody  {
+  background-image: url("images/chompers.gif");
+  background-repeat: no-repeat;
+  position: absolute;
+  background-size: cover;
+  height: 770px; width:1250px;
+}
+.buttons:focus {
+  outline: none;
+  box-shadow: none;
+}
+.messages {
+	font-family:Digital7;
+	color:white;
+	background-color:black;
+	font-size:20pt;
+	position:absolute;
+	top:700px;
+	width:400px;
+}
+
+.buttons:hover  {
+    -webkit-filter: drop-shadow(2px 1px 0 yellow)
+    				  drop-shadow(-1px -1px 0 yellow);
+    filter: drop-shadow(2px 1px 0 yellow)
+  		  drop-shadow(-1px -1px 0 yellow);
+}
+</style>
+
+<script>
+window.onload = function(){
+
+	var location;
+	var secondsLeft;
+	var started = false;
+	var forward;
+
+	parent.document.getElementById("computerCoreRoomAccess").style.display = "none";
+	parent.document.getElementById("lowerCorridorRoomAccess").style.display = "none";
+
+	var previousRoom = sessionStorage.getItem("previousRoom");
+	if (previousRoom == "computerCoreRoom") {
+		forward = false;
+		parent.document.getElementById("computerCoreRoomAccess").style.display = "block";
+		location = 8;
+	} else {
+		forward = true;
+		parent.document.getElementById("lowerCorridorRoomAccess").style.display = "block";
+		location = 0;
+	}
+
+	$('#jumpButton').click(function(){
+		secondsLeft = 5;
+		var answerCorrect = false;
+
+		var answer = document.getElementById ("jumpDistance").value;
+		document.getElementById("roomResponseText").innerText = "";
+
+		if (forward) {
+			//22427972
+			parent.document.getElementById("lowerCorridorRoomAccess").style.display = "none";
+			if (location == 0 && answer == 2) {
+				document.getElementById("startMessage").style.display = "none";
+				document.getElementById("message1").style.display = "block";
+				answerCorrect = true;
+				location = location + 1;
+			} else if (location == 1 && answer == 2) {
+				document.getElementById("message1").style.display = "none";
+				document.getElementById("message2").style.display = "block";
+				answerCorrect = true;
+				location = location + 1;
+			} else if (location == 2 && answer == 4) {
+				document.getElementById("message2").style.display = "none";
+				document.getElementById("message3").style.display = "block";
+				answerCorrect = true;
+				location = location + 1;
+			} else if (location == 3 && answer == 2) {
+				document.getElementById("message3").style.display = "none";
+				document.getElementById("message4").style.display = "block";
+				answerCorrect = true;
+				location = location + 1;
+			} else if (location == 4 && answer == 7) {
+				document.getElementById("message4").style.display = "none";
+				document.getElementById("message5").style.display = "block";
+				answerCorrect = true;
+				location = location + 1;
+			} else if (location == 5 && answer == 9) {
+				document.getElementById("message5").style.display = "none";
+				document.getElementById("message6").style.display = "block";
+				answerCorrect = true;
+				location = location + 1;
+			} else if (location == 6 && answer == 7) {
+				document.getElementById("message6").style.display = "none";
+				document.getElementById("message7").style.display = "block";
+				answerCorrect = true;
+				location = location + 1;
+			} else if (location == 7 && answer == 2) {
+				document.getElementById("message7").style.display = "none";
+				document.getElementById("endMessage").style.display = "block";
+				answerCorrect = true;
+				location = location + 1;
+				parent.document.getElementById("computerCoreRoomAccess").style.display = "block";
+				document.getElementById("countdown").style.display = "none";
+				document.getElementById ("jumpDistance").disabled = "true";
+				document.getElementById ("jumpButton").disabled = "true";
+
+				document.getElementById("roomResponseText").innerText = "";
+				var text = "You manage to make it to the other side of the chompers";
+				setTypeWriter();
+				typeWriter (text);
+			}
+		} else {
+
+			parent.document.getElementById("computerCoreRoomAccess").style.display = "none";
+
+			//27972422
+			if (location == 8 && answer == 2) {
+				document.getElementById("startMessage").style.display = "none";
+				document.getElementById("message1").style.display = "block";
+				answerCorrect = true;
+				location = location - 1;
+			} else if (location == 7 && answer == 7) {
+				document.getElementById("message1").style.display = "none";
+				document.getElementById("message2").style.display = "block";
+				answerCorrect = true;
+				location = location - 1;
+			} else if (location == 6 && answer == 9) {
+				document.getElementById("message2").style.display = "none";
+				document.getElementById("message3").style.display = "block";
+				answerCorrect = true;
+				location = location - 1;
+			} else if (location == 5 && answer == 7) {
+				document.getElementById("message3").style.display = "none";
+				document.getElementById("message4").style.display = "block";
+				answerCorrect = true;
+				location = location - 1;
+			} else if (location == 4 && answer == 2) {
+				document.getElementById("message4").style.display = "none";
+				document.getElementById("message5").style.display = "block";
+				answerCorrect = true;
+				location = location - 1;
+			} else if (location == 3 && answer == 4) {
+				document.getElementById("message5").style.display = "none";
+				document.getElementById("message6").style.display = "block";
+				answerCorrect = true;
+				location = location - 1;
+			} else if (location == 2 && answer == 2) {
+				document.getElementById("message6").style.display = "none";
+				document.getElementById("message7").style.display = "block";
+				answerCorrect = true;
+				location = location - 1;
+			} else if (location == 1 && answer == 2) {
+				document.getElementById("message7").style.display = "none";
+				document.getElementById("endMessage").style.display = "block";
+				answerCorrect = true;
+				location = location - 1;
+				parent.document.getElementById("lowerCorridorRoomAccess").style.display = "block";
+				document.getElementById("countdown").style.display = "none";
+				document.getElementById ("jumpDistance").disabled = "true";
+				document.getElementById ("jumpButton").disabled = "true";
+
+				document.getElementById("roomResponseText").innerText = "";
+				var text = "You manage to make it to the other side of the chompers";
+				setTypeWriter();
+				typeWriter (text);
+			}
+		}
+
+		document.getElementById ("jumpDistance").value = "";
+		
+		console.log ("secs - " + secondsLeft);
+		console.log ("ans - " + answerCorrect);
+		console.log ("location - " + location);
+		console.log ("started - " + started);
+
+		if (!started && location!=8 && location!=0 && answerCorrect) {
+			started = true;
+			startTimer ();
+		} else if (!answerCorrect) {
+			//back to start
+			backToStart ();
+		}
+	});
+
+	function backToStart () {
+		document.getElementById("countdown").style.display = "none";
+		document.getElementById("message1").style.display = "none";
+		document.getElementById("message2").style.display = "none";
+		document.getElementById("message3").style.display = "none";
+		document.getElementById("message4").style.display = "none";
+		document.getElementById("message5").style.display = "none";
+		document.getElementById("message6").style.display = "none";
+		document.getElementById("message7").style.display = "none";
+		document.getElementById("startMessage").style.display = "block";
+
+		document.getElementById("roomResponseText").innerText = "";
+		var text = "You are hit by a chomper but manage to return to the start.";
+		setTypeWriter();
+		typeWriter (text);
+
+		if (forward) {
+			parent.document.getElementById("lowerCorridorRoomAccess").style.display = "block";
+			location = 0;
+		} else if (!forward) {
+			parent.document.getElementById("computerCoreRoomAccess").style.display = "block";
+			location = 8;
+		}
+	}
+
+	function startTimer () {
+		if (secondsLeft>0 && location!=8 && location!= 0) {
+
+			document.getElementById("countdown").style.display = "block";
+			console.log ("here");
+
+			document.getElementById("countdown").innerHTML = secondsLeft;
+			secondsLeft = secondsLeft - 1;
+			setTimeout(startTimer, 1000);
+		} else {
+			// failed
+			started = false;
+			if (location!=8 && location!= 0) {
+				backToStart ();
+			}
+		}
+	}
+};
+</script>
+
+<body>
+	<div id="chompersBody">
+		<p id="startMessage" style="left:200px;" class="messages"> You are at the edge of the chompers</p>
+		<p id="message1" style="display:none; left:200px;" class="messages"> You are past the first chomper</p>
+		<p id="message2" style="display:none; left:200px;" class="messages"> You are past the second chomper</p>
+		<p id="message3" style="display:none; left:200px;" class="messages"> You are past the third chomper</p>
+		<p id="message4" style="display:none; left:200px;" class="messages"> You are past the fourth chomper</p>
+		<p id="message5" style="display:none; left:200px;" class="messages"> You are past the fifth chomper</p>
+		<p id="message6" style="display:none; left:200px;" class="messages"> You are past the sixth chomper</p>
+		<p id="message7" style="display:none; left:200px;" class="messages"> You are past the seventh chomper</p>
+		<p id="endMessage" style="display:none; left:200px;" class="messages"> You are at the edge of the chompers</p>
+		<input type="number" id="jumpDistance" style="left:700px; top:720px; color:white; position:absolute; height:30px; color:black; width:150px;" min="0" max="9"/>
+		<input type="button" id="jumpButton" style="left:890px; top:720px; color:white; position:absolute; height:30px; color:black;" value="Jump!"/>
+		<p id="countdown" style="display:none; left:1100px; font-family:Digital7; color:white; background-color:black; font-size:20pt; position:absolute; top:700px; width:50px;"></p>
+	</div>
+
+	<div style="background-color:black; color:white; position:absolute; width:50px; height:50px; left:1210px; top:710px;">
+	</div>
+	
+	<div id="roomDescription" class="roomDescription">
+		<p id="roomDescriptionText" style="width:370px; height:300px; margin-left:20px; margin-top:30px; top:47px; left:48px; position:relative;">
+			What is this room even doing here?
+		</p>
+	</div>
+	
+	<br><br>
+
+	<div id="roomResponses" class="roomResponses">
+		<p id="roomResponseText" style="width:360px; height:300px; margin-left:20px; margin-top:30px; top:80px; left:63px; position:relative;"></p>
+	</div>
+</body>
+	<div class="console">
+		<input style="margin-top:40px; margin-left:40px" type="text" class="consoleText">
+		<input style="margin-top:40px;" type="submit" value="Update System" class="consoleButton">
+		<input style="margin-top:10px; height:70px; width:600px; margin-left:70px" type="textarea" id="consoleArea">
+	</div>
+</html>

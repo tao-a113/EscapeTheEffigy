@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="javascript.js"></script>
+    <link rel="stylesheet" href="stylesheet.css">
+
+    <title>The Effigy - Escape Room v1.0</title>
+
+<script>
+$(document).ready (function() {
+
+    $(".classButton").on ("click", function () {
+
+		var role = $(this).val ();
+        localStorage.setItem("role", role);
+
+        window.location.href='startTimerPage.html';
+    });
+
+});
+</script>
+
+</head>
+<body>
+
+    <div class="logo">
+        <img alt="iFM OnLine" src="images/shipImage.png" style="width:800px;height:800px;float: left"/>
+    </div>
+
+	<br><br>
+
+    <h3>The Effigy</h3>
+
+	<div class="border">
+	<p>Disaster has struck! The Zuldanian cargo ship The Effigy has been attacked by an unknown vessel. The ships life support systems have been destroyed and the enemy vessel has retreated to a nearby nebula. Choose you role on the ship and see if you can escape in time.
+	</div>
+	<div>
+		<button class="classButton" value="Officer">Officer</button>
+		<button class="classButton" value="Engineer">Engineer</button>
+		<button class="classButton" value="Passenger">Passenger</button>
+	</div>
+</body>
+</html>

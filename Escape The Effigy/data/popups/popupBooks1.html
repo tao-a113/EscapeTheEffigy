@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <title>The Effigy - Escape Room v1.0</title>
+</head>
+
+<style>
+@font-face { font-family: Digital7; src: url('../digital-7/digital-7.ttf'); } 
+@font-face { font-family: SpaceAge; src: url('../space_age/space age.ttf'); } 
+.centered {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor:pointer;
+}
+.verticalLine {
+	border: .5px dashed black;
+	bottom: 0px;
+	left: 50%;
+	position: absolute;
+	top: 0px;
+	width: .1px;
+}
+</style>
+<script>
+$( document ).ready(function() {
+	var position = 0;
+	var book = 1;
+	$('#left').bind('click', function(){
+		if (position > 0) {
+			position = position - 1;
+			turnPage();
+		}
+
+	});
+	$('#right').bind('click', function(){
+		if (position < 10) {
+			position = position + 1;
+			turnPage();
+		}
+	});
+
+	$('.book').bind('click', function(){
+
+		var id = this.id;
+
+		if (id == "book1") book = 1;
+		if (id == "book4") book = 4;
+
+		position = 0;
+		turnPage();
+	});
+
+	function turnPage() {
+
+		if (position == 0) {
+			$("#line").hide();
+		} else {
+			$("#line").show();
+		}
+		$(".page").hide();
+		$("#book" + book + "p" + position).show();
+	}
+
+});
+</script>
+
+<body style="background-color:black; font-family:Digital7; color:black;font-size:16pt;">
+
+	<div style="width:40%; height:50%; border:5px solid brown; background-color:OldLace;" class="centered">
+		<div id="book1p0" class="page" style="font-size:24pt; font-family:SpaceAge;">Xarblobian translation guide - XiXaXo IV</div>
+		<div id="book1p1" class="page" style="display:none;"><img src="../images/alien1.png" style="width:100%;"><br>Red</div>
+		<div id="book1p2" class="page" style="display:none;"><img src="../images/alien2.png" style="width:100%;"><br>Blue</div>
+		<div id="book1p3" class="page" style="display:none;"><img src="../images/alien3.png" style="width:100%;"><br>Green</div>
+		<div id="book1p4" class="page" style="display:none;"><img src="../images/alien4.png" style="width:100%;"><br>Orange</div>
+		<div id="book1p5" class="page" style="display:none;"><img src="../images/alien5.png" style="width:100%;"><br>North</div>
+		<div id="book1p6" class="page" style="display:none;"><img src="../images/alien6.png" style="width:100%;"><br>South</div>
+		<div id="book1p7" class="page" style="display:none;"><img src="../images/alien7.png" style="width:100%;"><br>West</div>
+		<div id="book1p8" class="page" style="display:none;"><img src="../images/alien8.png" style="width:100%;"><br>East</div>
+		<div id="book1p9" class="page" style="display:none;"><img src="../images/alien9.png" style="width:100%;"><br>The same</div>
+		<div id="book1p10" class="page" style="display:none;"><img src="../images/alien10.png" style="width:100%;"><br>Opposite</div>
+
+
+		<div id="book4p0" class="page" style="font-size:24pt; display:none; font-family:SpaceAge;">Galactic Spaceship Handbook</div>
+		<div id="book4p1" class="page" style="display:none;"><table><tr><td>NAME OF SPACESHIP</td><td>Ariboo 3</td></tr><tr><td>TYPE OF SPACESHIP</td><td>Personal explorer / luxury transport</td></tr><tr><td>SYSTEM OF MANUFACTURE</td><td>Golk</td></tr><tr><td>COST WHEN NEW</td><td>$42,000,000</td></tr><tr><td>NUMBER OF CREW</td><td>20</td></tr><tr><td>MAXIMUM SPEED</td><td>355 LYPD</td></tr></table></div>
+		<div id="book4p2" class="page" style="font-size:14pt; display:none;">These spacecraft are some of the most incredible vehicles available and yet are only available to citizens of the wealthiest system: Golk.They represent the ultimate in materialistic excess today. Golk’s unparalleled productivity is due to vast cybernetic systems which churn out machinery and goods which are at the cutting edge of hi-technology. The Ariboo 3 is an enormously popular ‘personal spacecraft’ of enormous size but fits the category only due to it’s usage. It is often heavily customized to taste and outfitted to sumptuous levels.</div>
+		<div id="book4p3" class="page" style="display:none;"><table><tr><td>NAME OF SPACESHIP</td><td>Ayail</td></tr><tr><td>TYPE OF SPACESHIP</td><td>Large Freighter</td></tr><tr><td>SYSTEM OF MANUFACTURE</td><td>Dilcom</td></tr><tr><td>COST WHEN NEW</td><td>$156,000,000</td></tr><tr><td>NUMBER OF CREW</td><td>42</td></tr><tr><td>MAXIMUM SPEED</td><td>150 LYPD</td></tr></table></div>
+		<div id="book4p4" class="page" style="font-size:14pt; display:none;">A very large freighter, the Ayail class is designed to carry enormous containers that hold an enormous open volume of just about anything that needs to be transported around the galaxy - even other spacecraft! These craft are amongst the biggest civilian spaceships that have ever been made and are a rare sight indeed with just 32 being made. Made in theDilcom system which is one of the newer sectors of space they have contributed much to the economy of the new colony world.</div>
+		<div id="book4p5" class="page" style="display:none;"><table><tr><td>NAME OF SPACESHIP</td><td>OORSTANISCLAV</td></tr><tr><td>TYPE OF SPACESHIP</td><td>Corporate Ship</td></tr><tr><td>SYSTEM OF MANUFACTURE</td><td>Yark</td></tr><tr><td>COST WHEN NEW</td><td>$1,200,000,000</td></tr><tr><td>NUMBER OF CREW</td><td>3,500</td></tr><tr><td>MAXIMUM SPEED</td><td>20 LYPD</td></tr></table></div>
+		<div id="book4p6" class="page" style="font-size:14pt; display:none;">Oorstanisclav is named after the ruler of the Yark Empire who lived for 420 years after inheriting the fledgling colony world from his father Oorstanisclav. It is unparalleled in its combination of size and wealth it creates. There are other corporate ships but none like this incredible vessel, as this ship generates many billions of galactic dollars per week as it traverses the galaxy. It’s ability to absorb many large freighters and loads of raw minerals daily is simply awe inspiring.</div>
+		<div id="book4p7" class="page" style="display:none;"><table><tr><td>NAME OF SPACESHIP</td><td>Prastus</td></tr><tr><td>TYPE OF SPACESHIP</td><td>Battleship</td></tr><tr><td>SYSTEM OF MANUFACTURE</td><td>Brak 2</td></tr><tr><td>COST WHEN NEW</td><td>$450,000,000</td></tr><tr><td>NUMBER OF CREW</td><td>5,000</td></tr><tr><td>MAXIMUM SPEED</td><td>650 LYPD</td></tr></table></div>
+		<div id="book4p8" class="page" style="font-size:14pt; display:none;">This vast class of battleship has patrolled the Brak 2 system for over a hundred years and rather successfully, no raid on the wealthy homeland of the Brak species has ever been successful. The Prastus class remains one of the most capable military ships ever built, but little detail is known about the armaments that she contains. It is known that they house several thousand fighters which are incredibly fast, maneuverable and armed with a powerful anti-matter cannon.</div>
+		<div id="book4p9" class="page" style="display:none;"></div>
+		<div id="book4p10" class="page" style="font-size:14pt; display:none;"></div>
+
+		<div id="line" class="verticalLine" style="display:none;"></div>
+
+	</div>
+
+	<input id="left"   type="image" src="../images/leftArrow.png" style="top:65%; left:40%; height:50px; width:50px; transform: translate(-50%, -50%); position: absolute;"/>
+	<input id="right" type="image" src="../images/rightArrow.png" style="top:65%; left:60%; height:50px; width:50px; transform: translate(-50%, -50%); position: absolute;"/>
+
+	<div id="books">
+		<input id="book1" class="book" type="image" src="../images/book1.png" style="top:80%; left:35%; height:50px; width:50px; transform: translate(-50%, -50%); position: absolute;"/>
+		<input id="book4" class="book" type="image" src="../images/book4.png" style="top:80%; left:65%; height:50px; width:50px; transform: translate(-50%, -50%); position: absolute;"/>
+	</div>
+
+</body>
+</html>

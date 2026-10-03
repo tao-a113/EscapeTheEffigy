@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="javascript.js"></script>
+    <link rel="stylesheet" href="stylesheet.css">
+    <title>The Effigy - Escape Room v1.0</title>
+</head>
+
+<script>
+
+window.onload = function(){
+
+$("#spaceBody").hide().fadeIn(2000);
+$(".sliderDiv").hide().fadeIn(8000);
+
+$("#spaceBody").addClass("background");
+document.getElementById ("button2").style.display = "block";
+
+	var leftSlider = document.getElementById ("leftSlider");
+	var rightSlider = document.getElementById ("rightSlider");
+	var steps = 0;
+	var forwards = true;
+
+	leftSlider.oninput = function() {
+		console.log(this.value);
+		if(this.value == 100){
+			leftSlider.disabled = true;
+			$("#spaceBody").addClass("transformLeft");
+			$("#spaceBody").removeClass("transformRight");
+			movingLeft ();
+		}
+	}
+
+	rightSlider.oninput = function() {
+		console.log(this.value);
+		if(this.value == 100){
+			rightSlider.disabled = true;
+			$("#spaceBody").addClass("transformRight");
+			$("#spaceBody").removeClass("transformLeft");
+			movingRight ();
+		}
+	}
+
+	function movingLeft () {
+		var leftSlider = document.getElementById ("leftSlider");
+		var rightSlider = document.getElementById ("rightSlider");
+
+		leftSlider.value = leftSlider.value - 1;
+		document.getElementById ("button2").style.display = "none";
+		document.getElementById ("button1").style.display = "none";
+
+		if (leftSlider.value == 0){
+			rightSlider.disabled = false;
+			
+			if (forwards) steps = steps + 1;
+			if (!forwards) steps = steps - 1;
+			
+			if (steps == 0) {
+			
+				document.getElementById("roomResponseText").innerText = "";
+				var text = "You make it to the air lock.";
+				setTypeWriter();
+				typeWriter (text);
+			
+				$("#spaceBody").removeClass("transformRight");
+				$("#spaceBody").removeClass("transformLeft");
+				rightSlider.disabled = true;
+				leftSlider.disabled = false;
+				forwards = true;
+				document.getElementById ("button2").style.display = "block";
+			}
+		} else {
+			window.setTimeout(movingLeft, 50);
+		}
+	}
+	function movingRight () {
+		var leftSlider = document.getElementById ("leftSlider");
+		var rightSlider = document.getElementById ("rightSlider");
+
+		rightSlider.value = rightSlider.value - 1;
+		document.getElementById ("button2").style.display = "none";
+		document.getElementById ("button1").style.display = "none";
+
+		if (rightSlider.value == 0){
+			leftSlider.disabled = false;
+			
+			if (forwards) steps = steps + 1;
+			if (!forwards) steps = steps - 1;
+
+			if (steps == 6) {
+			
+				document.getElementById("roomResponseText").innerText = "";
+				var text = "You make it to the shuttle bay door.";
+				setTypeWriter();
+				typeWriter (text);
+			
+				$("#spaceBody").removeClass("transformRight");
+				$("#spaceBody").removeClass("transformLeft");
+				leftSlider.disabled = true;
+				rightSlider.disabled = false;
+				forwards = false;
+				document.getElementById ("button1").style.display = "block";
+			}
+
+		} else {
+			window.setTimeout(movingRight, 50);
+		}
+	}
+	$('#button1').click(function(){
+		document.getElementById("roomResponseText").innerText = "";
+		var text = "You find the damaged shuttle bay door. The electronics are going crazy and door needs pushing at the right time. You may need some help.";
+		setTypeWriter();
+		typeWriter (text);
+		
+		popupWindow = window.open(
+			"popups/popupOutsideButton.html",'popUpWindow','height=800,width=800,left=50,top=50,resizable=no,scrollbars=no,toolbar=no,menubar=no,location=no,directories=no,status=yes'
+		)
+	});
+	
+	$('#button2').click(function(){
+		parent.changeRoom ("airlockRoom");
+	});
+
+};
+
+</script>
+
+<style>
+#spaceBody  {
+  background-image: url("images/space2.jpg");
+  background-repeat: no-repeat;
+  position: absolute;
+  background-size: cover;
+  height: 770px; width:1250px;
+}
+
+.background {
+  -webkit-transition: all 5s;
+  -moz-transition: all 5s;
+  -ms-transition: all 5s
+  -o-transition: all 5s;
+  transition: all 5s;
+}
+
+.transformLeft {
+    -webkit-transform: rotate(-10deg);
+	-moz-transform: rotate(-10deg);
+	-ms-transform: rotate(-10deg);
+	-o-transform: rotate(-10deg);
+	transform: rotate(-10deg);
+}
+.transformRight {
+    -webkit-transform: rotate(10deg);
+	-moz-transform: rotate(10deg);
+	-ms-transform: rotate(10deg);
+	-o-transform: rotate(10deg);
+	transform: rotate(10deg);
+}
+
+.buttons:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.buttons:hover  {
+    -webkit-filter: drop-shadow(2px 1px 0 yellow)
+    				  drop-shadow(-1px -1px 0 yellow);
+    filter: drop-shadow(2px 1px 0 yellow)
+  		  drop-shadow(-1px -1px 0 yellow);
+}
+
+.sliderDiv {
+	position:absolute;
+	transform: rotate(270deg);
+	top:600px; width:200px;
+	display:none;
+}
+
+.slider::-webkit-slider-thumb {
+	-webkit-appearance: initial;
+	background:black;
+}
+
+input[type=range].slider {
+  width: 100%;
+  margin: 7.45px 0;
+  background-color: transparent;
+  -webkit-appearance: none;
+}
+input[type=range].slider:focus {
+  outline: none;
+}
+input[type=range].slider::-webkit-slider-runnable-track {
+  background: rgba(192, 193, 194, 0.7);
+  border: 5px solid rgba(0, 0, 0, 0);
+  border-radius: 25px;
+  width: 100%;
+  height: 25.1px;
+  cursor: pointer;
+}
+input[type=range].slider::-webkit-slider-thumb {
+  margin-top: -12.45px;
+  width: 30px;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 0px solid rgba(0, 0, 0, 0);
+  border: 0;
+  cursor: pointer;
+  -webkit-appearance: none;
+}
+input[type=range].slider:focus::-webkit-slider-runnable-track {
+  background: #ddddde;
+}
+input[type=range].slider::-moz-range-track {
+  background: rgba(192, 193, 194, 0.7);
+  border: 5px solid rgba(0, 0, 0, 0);
+  border-radius: 25px;
+  width: 100%;
+  height: 25.1px;
+  cursor: pointer;
+}
+input[type=range].slider::-moz-range-thumb {
+  width: 30px;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 0px solid rgba(0, 0, 0, 0);
+  border: 0;
+  cursor: pointer;
+}
+input[type=range].slider::-ms-track {
+  background: transparent;
+  border-color: transparent;
+  border-width: 7.45px 0;
+  color: transparent;
+  width: 100%;
+  height: 25.1px;
+  cursor: pointer;
+}
+input[type=range].slider::-ms-fill-lower {
+  background: #a3a5a6;
+  border: 5px solid rgba(0, 0, 0, 0);
+  border-radius: 50px;
+}
+input[type=range].slider::-ms-fill-upper {
+  background: rgba(192, 193, 194, 0.7);
+  border: 5px solid rgba(0, 0, 0, 0);
+  border-radius: 50px;
+}
+input[type=range].slider::-ms-thumb {
+  width: 30px;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 0px solid rgba(0, 0, 0, 0);
+  border: 0;
+  cursor: pointer;
+  margin-top: 0px;
+  /*Needed to keep the Edge thumb centred*/
+}
+input[type=range].slider:focus::-ms-fill-lower {
+  background: rgba(192, 193, 194, 0.7);
+}
+input[type=range].slider:focus::-ms-fill-upper {
+  background: #ddddde;
+}
+/*TODO: Use one of the selectors from https://stackoverflow.com/a/20541859/7077589 and figure out
+how to remove the virtical space around the range input in IE*/
+@supports (-ms-ime-align:auto) {
+  /* Pre-Chromium Edge only styles, selector taken from hhttps://stackoverflow.com/a/32202953/7077589 */
+  input[type=range].slider {
+    margin: 0;
+    /*Edge starts the margin from the thumb, not the track as other browsers do*/
+  }
+}
+
+
+</style>
+
+<body>
+	<div id="spaceBody">
+		<input id="button1" class="buttons" type="image" src="images/spaceButton1.png" style="top:510px; left:420px; height:90px; width:70px; position:absolute; display:none"/>
+		<input id="button2" class="buttons" type="image" src="images/spaceButton2.png" style="top:525px; left:704px; height:320px; width:390px; position:absolute; display:none"/>
+	</div>
+
+	<div class="sliderDiv" style="left:100px;">
+		<input type="range" id="leftSlider" class="slider" value="0">
+	</div>
+	<div class="sliderDiv" style="left:1000px;">
+		<input type="range" id="rightSlider" class="slider" value="0" disabled>
+	</div>
+
+	<div id="roomDescription" class="roomDescription">
+		<p id="roomDescriptionText" style="width:370px; height:300px; margin-left:20px; margin-top:30px; top:47px; left:48px; position:relative;">
+			You're in spaaaaaace!!
+		</p>
+	</div>
+
+	<br><br>
+
+	<div id="roomResponses" class="roomResponses">
+		<p id="roomResponseText" style="width:360px; height:300px; margin-left:20px; margin-top:30px; top:80px; left:63px; position:relative;"></p>
+	</div>
+</body>
+	<div class="console">
+		<input style="margin-top:40px; margin-left:40px" type="text" class="consoleText">
+		<input style="margin-top:40px;" type="submit" value="Update System" class="consoleButton">
+		<input style="margin-top:10px; height:70px; width:600px; margin-left:70px" type="textarea" id="consoleArea">
+	</div>
+</html>
