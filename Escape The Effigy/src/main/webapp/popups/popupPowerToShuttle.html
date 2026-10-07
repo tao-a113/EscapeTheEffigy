@@ -1,0 +1,378 @@
+<html>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<head>
+</head>
+<script>
+
+// Knob angle
+var angle = 0;
+var angle2 = 0;
+var angle3 = 0;
+var angle4 = 0;
+
+window.onload = function(){
+
+	$('#button2').click(function(){
+
+	  	var blue = angle;
+	  	var orange = angle2;
+	  	var green = angle3;
+	  	var red = angle4;
+
+		console.log (blue);
+		console.log (orange);
+		console.log (green);
+		console.log (red);
+		
+	  	if (blue == "90" && orange == "90" && green == "135" && red == "-90") {
+			document.getElementById("answer").innerHTML = "#24700021";
+			localStorage.setItem("isShuttleGotPower", "true");
+	  	} else {
+			window.close ();
+	  	}
+
+	});
+	// clear
+	$('#button1').click(function(){
+		angle = 0;
+		angle2 = 0;
+		angle3 = 0;
+		angle4 = 0;
+	});
+
+};
+
+
+var dragging = false; // Is the slider being dragged?
+var rollover = false; // Is the mouse over the slider?
+
+var dragging2 = false; // Is the slider being dragged?
+var rollover2 = false; // Is the mouse over the slider?
+
+var dragging3 = false; // Is the slider being dragged?
+var rollover3 = false; // Is the mouse over the slider?
+
+var dragging4 = false; // Is the slider being dragged?
+var rollover4 = false; // Is the mouse over the slider?
+
+// Circle variables for knob
+var x = 80;
+var y = 50;
+var r = 40;
+var x2 = 240;
+var y2 = 50;
+var r2 = 40;
+var x3 = 400;
+var y3 = 50;
+var r3 = 40;
+var x4 = 560;
+var y4 = 50;
+var r4 = 40;
+
+var count = 0;
+var count2 = 0;
+var count3 = 0;
+var count4 = 0;
+
+// Offset angle for turning knob
+var offsetAngle = 0;
+var offsetAngle2 = 0;
+var offsetAngle3 = 0;
+var offsetAngle4 = 0;
+
+function setup() {
+  let canvas = createCanvas(700, 120);
+  canvas.position(80, 450, 'fixed');
+}
+
+function draw() {
+
+  background(0);
+  stroke('blue');
+  strokeWeight(5);
+  
+  angleMode(DEGREES);
+  
+	if (count === 0) {
+	  // Is it being dragged?
+	  if (dragging) {
+		var dx = mouseX - x;
+		var dy = mouseY - y;
+		var mouseAngle = atan2(dy, dx);
+		angle = mouseAngle - offsetAngle;
+	  }
+
+	  
+	  if (angle > -22.5 && angle < 22.5) angle = 0;
+	  if (angle > 22.5 && angle < 67.5) angle = 45;
+	  if (angle > 67.5 && angle < 112.5) angle = 90;
+	  if (angle > 112.5 && angle < 157.5) angle = 135;
+	  if (angle > 157.5 || angle < -157.5) angle = -180;
+	  
+	  if (angle < -22.5 && angle > -67.5) angle = -45;
+	  if (angle < -67.5 && angle > -112.5) angle = -90;
+	  if (angle < -112.5 && angle > -157.5) angle = -135;
+	  
+	  // Fill according to state
+	  if (dragging) {
+		fill (175);
+	  }
+	  else {
+		fill(255);
+	  }
+	  // Draw ellipse for knob
+	  push();
+	  translate(x, y);
+	  rotate(angle);
+	  ellipse(0, 0, r*2, r*2);
+	  line(0, 0, r, 0);
+	  pop();
+	  fill(0);
+
+		if (dragging) {
+			count == 2;
+		}
+		
+	}
+
+// ------------ 2nd knob ----------------
+  stroke('orange');
+  strokeWeight(5);
+	if (count2 === 0) {
+	  // Is it being dragged?
+	  if (dragging2) {
+		var dx = mouseX - x2;
+		var dy = mouseY - y2;
+		var mouseAngle2 = atan2(dy, dx);
+		angle2 = mouseAngle2 - offsetAngle2;
+	  }
+
+	  if (angle2 > -22.5 && angle2 < 22.5) angle2 = 0;
+	  if (angle2 > 22.5 && angle2 < 67.5) angle2 = 45;
+	  if (angle2 > 67.5 && angle2 < 112.5) angle2 = 90;
+	  if (angle2 > 112.5 && angle2 < 157.5) angle2 = 135;
+	  if (angle2 > 157.5 || angle2 < -157.5) angle2 = -180;
+	  
+	  if (angle2 < -22.5 && angle2 > -67.5) angle2 = -45;
+	  if (angle2 < -67.5 && angle2 > -112.5) angle2 = -90;
+	  if (angle2 < -112.5 && angle2 > -157.5) angle2 = -135;
+	  
+	  
+	  // Fill according to state
+	  if (dragging2) {
+		fill (175);
+	  }
+	  else {
+		fill(255);
+	  }
+	  // Draw ellipse for knob
+	  push();
+	  translate(x2, y2);
+	  rotate(angle2);
+	  ellipse(0, 0, r2*2, r2*2);
+	  line(0, 0, r2, 0);
+	  pop();
+	  fill(0);
+
+		if (dragging2) {
+			count2 == 2;
+		}
+	}
+
+// ------------ 3rd knob ----------------
+  stroke('green');
+  strokeWeight(5);
+	if (count3 === 0) {
+	  // Is it being dragged?
+	  if (dragging3) {
+		var dx = mouseX - x3;
+		var dy = mouseY - y3;
+		var mouseAngle3 = atan2(dy, dx);
+		angle3 = mouseAngle3 - offsetAngle3;
+	  }
+
+	  if (angle3 > -22.5 && angle3 < 22.5) angle3 = 0;
+	  if (angle3 > 22.5 && angle3 < 67.5) angle3 = 45;
+	  if (angle3 > 67.5 && angle3 < 112.5) angle3 = 90;
+	  if (angle3 > 112.5 && angle3 < 157.5) angle3 = 135;
+	  if (angle3 > 157.5 || angle3 < -157.5) angle3 = -180;
+	  
+	  if (angle3 < -22.5 && angle3 > -67.5) angle3 = -45;
+	  if (angle3 < -67.5 && angle3 > -112.5) angle3 = -90;
+	  if (angle3 < -112.5 && angle3 > -157.5) angle3 = -135;
+	  
+	  // Fill according to state
+	  if (dragging3) {
+		fill (175);
+	  }
+	  else {
+		fill(255);
+	  }
+	  // Draw ellipse for knob
+	  push();
+	  translate(x3, y3);
+	  rotate(angle3);
+	  ellipse(0, 0, r3*2, r3*2);
+	  line(0, 0, r3, 0);
+	  pop();
+	  fill(0);
+
+
+
+
+		if (dragging3) {
+			count3 == 2;
+		}
+	}
+
+// ------------ 4th knob ----------------
+  stroke('red');
+  strokeWeight(5);
+	if (count4 === 0) {
+	  // Is it being dragged?
+	  if (dragging4) {
+		var dx = mouseX - x4;
+		var dy = mouseY - y4;
+		var mouseAngle4 = atan2(dy, dx);
+		angle4 = mouseAngle4 - offsetAngle4;
+	  }
+	  
+	  if (angle4 > -22.5 && angle4 < 22.5) angle4 = 0;
+	  if (angle4 > 22.5 && angle4 < 67.5) angle4 = 45;
+	  if (angle4 > 67.5 && angle4 < 112.5) angle4 = 90;
+	  if (angle4 > 112.5 && angle4 < 157.5) angle4 = 135;
+	  if (angle4 > 157.5 || angle4 < -157.5) angle4 = -180;
+	  
+	  if (angle4 < -22.5 && angle4 > -67.5) angle4 = -45;
+	  if (angle4 < -67.5 && angle4 > -112.5) angle4 = -90;
+	  if (angle4 < -112.5 && angle4 > -157.5) angle4 = -135;
+
+	  // Fill according to state
+	  if (dragging4) {
+		fill (175);
+	  }
+	  else {
+		fill(255);
+	  }
+	  // Draw ellipse for knob
+	  push();
+	  translate(x4, y4);
+	  rotate(angle4);
+	  ellipse(0, 0, r4*2, r4*2);
+	  line(0, 0, r4, 0);
+	  pop();
+	  fill(0);
+
+
+		if (dragging4) {
+			count4 == 2;
+		}
+	}
+
+	if (count === 2) {
+		var b = map(calcAngle, 0, TWO_PI, 0, 255);
+		fill(b);
+		rect(220, 90, 160, 180);
+	}
+	if (count2 === 2) {
+		var b2 = map(calcAngle2, 0, TWO_PI, 0, 255);
+		fill(b2);
+		rect(420, 90, 160, 180);
+	}
+	if (count3 === 2) {
+		var b3 = map(calcAngle3, 0, TWO_PI, 0, 255);
+		fill(b3);
+		rect(620, 90, 160, 180);
+	}
+	if (count4 === 2) {
+		var b4 = map(calcAngle4, 0, TWO_PI, 0, 255);
+		fill(b4);
+		rect(820, 90, 160, 180);
+	}
+}
+
+function mousePressed() {
+  // Did I click on slider?
+  if (dist(mouseX, mouseY, x, y) < r) {
+    dragging = true;
+    // If so, keep track of relative location of click to corner of rectangle
+    var dx = mouseX - x;
+    var dy = mouseY - y;
+    offsetAngle = atan2(dy, dx) - angle;
+  }
+    if (dist(mouseX, mouseY, x2, y2) < r2) {
+      dragging2 = true;
+      // If so, keep track of relative location of click to corner of rectangle
+      var dx = mouseX - x2;
+      var dy = mouseY - y2;
+      offsetAngle2 = atan2(dy, dx) - angle2;
+  }
+    if (dist(mouseX, mouseY, x3, y3) < r3) {
+      dragging3 = true;
+      // If so, keep track of relative location of click to corner of rectangle
+      var dx = mouseX - x3;
+      var dy = mouseY - y3;
+      offsetAngle3 = atan2(dy, dx) - angle3;
+  }
+    if (dist(mouseX, mouseY, x4, y4) < r4) {
+      dragging4 = true;
+      // If so, keep track of relative location of click to corner of rectangle
+      var dx = mouseX - x4;
+      var dy = mouseY - y4;
+      offsetAngle4 = atan2(dy, dx) - angle4;
+  }
+}
+
+function mouseReleased() {
+  // Stop dragging
+  dragging = false;
+  dragging2 = false;
+  dragging3 = false;
+  dragging4 = false;
+}
+
+</script>
+<style>
+
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor:pointer;
+}
+.container {
+  position:relative;
+  text-align:center;
+}
+
+</style>
+<body style="background-color:black; font-family: Digital7;color:white; font-size: 16pt;">
+
+<div style="top:50px; left:225px; position:absolute;">
+	<img src="../images/alien3.png" style="width:20%">
+	<img src="../images/alien6.png" style="width:20%">
+	<img src="../images/alien7.png" style="width:20%">
+	<br>
+	<img src="../images/alien4.png" style="width:20%">
+	<img src="../images/alien1.png" style="width:20%">
+	<img src="../images/alien10.png" style="width:20%">
+	<br>
+	<img src="../images/alien1.png" style="width:20%">
+	<img src="../images/alien5.png" style="width:20%">
+	<br>
+	<img src="../images/alien2.png" style="width:20%">
+	<img src="../images/alien9.png" style="width:20%">
+	<img src="../images/alien4.png" style="width:20%">
+</div>
+
+	<input id="button2" type="button" value="Send Power" style="left:250px; top:600px; height:60px; width:120px; position:absolute;"/>
+	<input id="button1" type="button" value="clear" style="left:450px; top:600px; height:60px; width:120px; position:absolute;"/>
+	<div>
+	<p id="answer" style="color:white; left:200px; top:700px; height:50px; width:100px; position:absolute;">
+	</div>
+
+
+</body>
+</html>

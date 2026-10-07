@@ -1,0 +1,195 @@
+<html>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<head>
+</head>
+<style>
+@font-face { font-family: Digital7; src: url('digital-7/digital-7.ttf'); } 
+</style>
+<script>
+
+window.onload = function(){
+
+var sounds = [];
+var phase = 1;
+var off = true;
+
+	$('#record').click(function(){
+		if (off) {
+			$(this).attr('src','../images/recordButtonOn.png');
+		} else {
+			$(this).attr('src','../images/recordButtonOff.png');
+		}
+		off = !off;
+	});
+	
+	$('.button').click(function(){
+		var id = $(this).attr('id');
+		var beep;
+				
+		switch (id) {
+			case ("button0") : beep = new Audio('../sounds/beep0.wav'); break;
+			case ("button1") : beep = new Audio('../sounds/beep1.wav'); break;
+			case ("button2") : beep = new Audio('../sounds/beep2.wav'); break;
+			case ("button3") : beep = new Audio('../sounds/beep3.wav'); break;
+			case ("button4") : beep = new Audio('../sounds/beep4.wav'); break;
+			case ("button5") : beep = new Audio('../sounds/beep5.wav'); break;
+			case ("button6") : beep = new Audio('../sounds/beep6.wav'); break;
+			case ("button7") : beep = new Audio('../sounds/beep7.wav'); break;
+			case ("button8") : beep = new Audio('../sounds/beep8.wav'); break;
+			case ("button9") : beep = new Audio('../sounds/beep9.wav'); break;
+			case ("button10") : beep = new Audio('../sounds/beep10.wav'); break;
+			case ("button11") : beep = new Audio('../sounds/beep11.wav'); break;
+			case ("button12") : beep = new Audio('../sounds/beep12.wav'); break;
+			case ("button13") : beep = new Audio('../sounds/beep13.wav'); break;
+			case ("button14") : beep = new Audio('../sounds/beep14.wav'); break;
+		}
+		beep.play();
+		if (!off) {
+			addSound (id);
+		}
+	});
+
+	function addSound (id) {
+	
+		var num = id.substr(6);
+		var column = $('<td id='+num+' style="width:50px;">'+ num +'</td>'); 
+		
+		$('#soundTable tr').append(column);
+		sounds.push (num);
+	}
+	
+	$('#play').click(function(){
+	
+		var audio = new Audio();
+		i = 0;
+		var playlist = new Array();
+
+		for (j=0; j<sounds.length; j++) {		
+			var sound = sounds[j];
+			playlist.push ('../sounds/beep'+sound+'.wav');
+		}
+		
+		audio.onended = (event) => {
+		
+			if (i < playlist.length) {
+				i = ++i;
+				audio.src = playlist[i];
+				audio.play();
+			}
+			if (i == playlist.length) {
+				if (sounds[0] == 8 && sounds[1] == 9 && sounds[2] == 7 && sounds[3] == 0 && sounds[4] == 4 && sounds.length == 5 && phase == 1) {
+					
+					nextPhase ();
+					
+				}
+			}
+		};
+		
+		audio.loop = false;
+		audio.src = playlist[0];
+		audio.play();
+	});
+	
+	$('#clear').click(function(){
+		var i;
+		for (i = 0; i<sounds.length; i++) {
+			var sound = sounds[i];
+			$('#soundTable tr td#' + sound).remove();    
+		}
+		sounds = [];
+	});
+	
+	function nextPhase () {
+		$('.button').hide ();
+		$('#keypad').hide ();
+		$('#clear').hide ();
+		$('#play').hide ();
+		$('#soundTable').hide ();
+		$('#record').hide ();
+		sounds = [];
+		
+		$('#musicPanel1').show ();
+		$('#musicPanel2').show ();
+		$('#musicPanel3').show ();
+		$('.button2').show ();
+		$('#answer').show ();
+		
+	}
+	
+		$('.button2').click(function(){
+		
+			var audio = new Audio();
+			i = 0;
+			var playlist = new Array();
+
+			
+			// 0 9 8 9 10 7
+			playlist.push ('../sounds/beep0.wav');
+			playlist.push ('../sounds/beep9.wav');
+			playlist.push ('../sounds/beep8.wav');
+			playlist.push ('../sounds/beep9.wav');
+			playlist.push ('../sounds/beep10.wav');
+			playlist.push ('../sounds/beep7.wav');
+		
+			audio.onended = (event) => {
+		
+				if (i < playlist.length) {
+					i = ++i;
+					audio.src = playlist[i];
+					audio.play();
+				}
+			};
+			audio.loop = false;
+			audio.src = playlist[0];
+			audio.play();
+		});
+	
+};
+</script>
+
+<body style="background-color:black; font-family:Digital7; color:black;font-size:18pt;">
+
+	<img src="../images/keypad2.png" id="keypad" style="width:400px; height:400px; position:absolute; left:180px; top:150px;">
+	
+	<input type="button" id="clear" value="clear" style="width:50px; height:30px; position:absolute; left:650px; top:220px;">
+	<input type="button" id="play" value="play"    style="width:50px; height:30px; position:absolute; left:650px; top:170px;">
+	
+	<input type="button" id="button0" class="button" style="width:80px; height:80px; position:absolute; left:213px; top:438px; background:transparent; font-size:0;">
+	<input type="button" id="button1" class="button" style="width:80px; height:80px; position:absolute; left:298px; top:438px; background:transparent; font-size:0;">
+	<input type="button" id="button2" class="button" style="width:80px; height:80px; position:absolute; left:383px; top:438px; background:transparent; font-size:0;">
+	<input type="image" src="../images/recordButtonOff.png" id="record" style="width:80px; height:80px; position:absolute; left:470px; top:438px; font-size:0;">
+	
+	<input type="button" id="button3" class="button" style="width:80px; height:80px; position:absolute; left:213px; top:355px; background:transparent; font-size:0;">
+	<input type="button" id="button4" class="button" style="width:80px; height:80px; position:absolute; left:298px; top:355px; background:transparent; font-size:0;">
+	<input type="button" id="button5" class="button" style="width:80px; height:80px; position:absolute; left:383px; top:355px; background:transparent; font-size:0;">
+	<input type="button" id="button6" class="button" style="width:80px; height:80px; position:absolute; left:470px; top:355px; background:transparent; font-size:0;">
+	
+	<input type="button" id="button7" class="button" style="width:80px; height:80px; position:absolute; left:213px; top:270px; background:transparent; font-size:0;">
+	<input type="button" id="button8" class="button" style="width:80px; height:80px; position:absolute; left:298px; top:270px; background:transparent; font-size:0;">
+	<input type="button" id="button9" class="button" style="width:80px; height:80px; position:absolute; left:383px; top:270px; background:transparent; font-size:0;">
+	<input type="button" id="button10" class="button" style="width:80px; height:80px; position:absolute; left:470px; top:270px; background:transparent; font-size:0;">
+	
+	<input type="button" id="button11" class="button" style="width:80px; height:80px; position:absolute; left:213px; top:185px; background:transparent; font-size:0;">
+	<input type="button" id="button12" class="button" style="width:80px; height:80px; position:absolute; left:298px; top:185px; background:transparent; font-size:0;">
+	<input type="button" id="button13" class="button" style="width:80px; height:80px; position:absolute; left:383px; top:185px; background:transparent; font-size:0;">
+	<input type="button" id="button14" class="button" style="width:80px; height:80px; position:absolute; left:470px; top:185px; background:transparent; font-size:0;">
+
+	<img src="../images/musicPanel.png" id="musicPanel1" style="width:400px; height:100px; position:absolute; left:180px; top:200px; display:none;">
+	<input type="button" id="play2" class="button2" style="width:80px; height:80px; position:absolute; left:340px; top:205px; border:none; background:transparent; font-size:0; display:none;">
+	
+	<div style="color:white; left:200px; top:80px; height:50px; width:500px; position:absolute;">
+		<p id="sounds">
+		
+		<table id="soundTable" style="color:white;">
+			<tr>
+				<td></td>
+			</tr>
+		</table>
+	</div>
+	
+	<div>
+		<p id="answer" style="color:white; left:300px; top:400px; height:50px; width:500px; position:absolute; display:none;"> #****-1081 </p>
+	</div>
+
+</body>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="javascript.js"></script>
+    <link rel="stylesheet" href="stylesheet.css">
+
+    <title>The Effigy - Escape Room v1.0</title>
+</head>
+
+<style>
+#cargoBayBody  {
+  background-image: url("images/cargoBay.png");
+  background-repeat: no-repeat;
+  position: absolute;
+  background-size: cover;
+  height: 770px; width:1250px;
+}
+#cargoBayBody2  {
+  background-image: url("images/cargoBay2.png");
+  background-repeat: no-repeat;
+  position: absolute;
+  background-size: cover;
+  height: 770px; width:1250px;
+  clip-path:url(#clip);
+}
+.buttons:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.buttons:hover  {
+    -webkit-filter: drop-shadow(2px 1px 0 yellow)
+    				  drop-shadow(-1px -1px 0 yellow);
+    filter: drop-shadow(2px 1px 0 yellow)
+  		  drop-shadow(-1px -1px 0 yellow);
+}
+.a {
+  opacity:0.4;
+}
+</style>
+
+<script>
+$( document ).ready(function() {
+	$('#button1').click(function(){
+	
+		var fixed = localStorage.getItem("isTransporterFixed");
+		
+		if (fixed == "true") {
+			document.getElementById("roomResponseText").innerText = "";
+			var text = "The short range transporter has already been fixed.";
+			setTypeWriter();
+			typeWriter (text);
+			return;
+		}
+	
+		document.getElementById("roomResponseText").innerText = "";
+		var text = "You attept to fix the cargo transporter";
+		setTypeWriter();
+		typeWriter (text);
+
+		popupWindow = window.open(
+			"popups/popUpImageSwap.html",'popUpWindow','height=480,width=650,left=50,top=50,resizable=no,scrollbars=no,toolbar=no,menubar=no,location=no,directories=no,status=yes'
+		)
+	});
+	
+	$('#button2').click(function(){
+	
+		var timer = localStorage.getItem("fruitTimer");
+	
+		if (timer != 0) {
+			document.getElementById("roomResponseText").innerText = "";
+			var text = "You must wait for the fruits decontamination process to complete before looking again.";
+			setTypeWriter();
+			typeWriter (text);
+			return;
+		}
+	
+		document.getElementById("roomResponseText").innerText = "";
+		var text = "This contains lemons, grapes, blackberries, watermelon, coconuts, pineapples, papaya, bananas, kiwi, pears, strawberries, blueberries, peaches, apples, oranges and guava. But something is missing...";
+		setTypeWriter();
+		typeWriter (text);
+
+		popupWindow = window.open(
+			"popups/popupFoodMemory.html",'popUpWindow','height=800,width=800,left=50,top=50,resizable=no,scrollbars=no,toolbar=no,menubar=no,location=no,directories=no,status=yes'
+		)
+	});
+	
+		$('#button3').click(function(){
+			
+			var fixed = localStorage.getItem("isTransporterFixed");
+			
+			document.getElementById("roomResponseText").innerText = "";
+			var text = "The short distance transporter seems to have malfunctioned. Try to fix it first";
+			
+			if (fixed == "true") {
+				var text = "This is a short distance transporter. It is fully operational."
+				popupWindow = window.open(
+					"popups/popupTransporter.html",'popUpWindow','height=800,width=800,left=50,top=50,resizable=no,scrollbars=no,toolbar=no,menubar=no,location=no,directories=no,status=yes'
+				)
+			}
+			
+			setTypeWriter();
+			typeWriter (text);
+			
+		});
+});
+
+let cursor = document.getElementById("lo");
+let circle = document.getElementById("circle");
+
+let setCursorPosition2 = function(e) {
+			var circle = document.getElementById("circle");
+
+			circle.setAttribute('cx',e.clientX);
+			circle.setAttribute('cy',e.clientY);
+			};
+
+
+document.addEventListener("mousemove", e => setCursorPosition2(e));
+
+	function isKeyPressed(event) {
+	
+		var gotBlackLight = localStorage.getItem("gotBlacklight");
+		
+		if (event.shiftKey && gotBlackLight == "true") {
+			$("#lo").toggle ();
+			$("#cargoBayBody2").toggle ();
+			$(".buttons").toggle ();
+			$("#cargoBayBody").toggleClass( "a" );
+						
+		}
+	}
+</script>
+
+<body onkeyup="isKeyPressed(event)">
+	<div id="cargoBayBody">
+		<input id="button1" class="buttons" type="image" src="images/cargoBayButton1.png" style="top:360px; left:335px; height:60px; width:160px; position:absolute"/>
+		<input id="button2" class="buttons" type="image" src="images/cargoBayButton2.png" style="top:580px; left:100px; height:200px; width:375px; position:absolute"/>
+		<input id="button3" class="buttons" type="image" src="images/cargoBayButton3.png" style="top:348px; left:1075px; height:70px; width:170px; position:absolute"/>
+
+	</div>
+	
+	<div id="cargoBayBody2" style="display:none;">
+		<svg id="lo" width="100%" height="100%" style="display:none;">
+			<clippath id="clip">
+				<circle id="circle" cx="50" cy="50" r="50"/>
+			</clippath>
+		</svg>
+	</div>
+
+	<div id="roomDescription" class="roomDescription">
+		<p id="roomDescriptionText" style="width:370px; height:300px; margin-left:20px; margin-top:30px; top:47px; left:48px; position:relative;">
+			You are in the cargo bay. This room contains much of the ships food supplies. There are also repairing equipment for patching up holes in the ship. The cargo bay is equipped with a short range transporter.
+		</p>
+	</div>
+
+	<br><br>
+
+	<div id="roomResponses" class="roomResponses">
+		<p id="roomResponseText" style="width:360px; height:300px; margin-left:20px; margin-top:30px; top:80px; left:63px; position:relative;"></p>
+	</div>
+</body>
+	<div class="console">
+		<input style="margin-top:40px; margin-left:40px" type="text" class="consoleText">
+		<input style="margin-top:40px;" type="submit" value="Update System" class="consoleButton">
+		<input style="margin-top:10px; height:70px; width:600px; margin-left:70px" type="textarea" id="consoleArea">
+	</div>
+</html>

@@ -1,0 +1,110 @@
+<html>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<head>
+</head>
+<script>
+	
+$( document ).ready(function() {
+
+var whatToTransport;
+var gotTools;
+var gotFood;
+
+	$('#food').click(function(){
+		gotFood = localStorage.getItem("isShuttleGotFood");
+		if (gotFood != "true") {
+			console.log (gotFood);
+			document.getElementById("answer").innerHTML = "Food supplies are ready for transportation.";
+			whatToTransport = "food";
+		} else {
+			document.getElementById("answer").innerHTML = "Food supplies have already been transported. #77473332";
+		}
+	
+	});
+	$('#tools').click(function(){
+		gotTools = localStorage.getItem("isToolsTransported");
+		if (gotTools != "true") {
+			document.getElementById("answer").innerHTML = "Tools are ready for transportation.";
+			whatToTransport = "tools";
+		} else {
+			document.getElementById("answer").innerHTML = "Tools have already been transported #65653101";
+		}
+	});
+
+	$('#button1').click(function(){
+		
+		if (whatToTransport != "food" && whatToTransport != "tools") {
+			document.getElementById("answer").innerHTML = "There is nothing loaded for transport";
+			return;
+		}
+		
+		var roomName = document.getElementById('text').value;
+		var replyText;
+
+		if (roomName == undefined) roomName = "";
+		roomName = roomName.toLowerCase();
+
+		switch (roomName) {
+
+			case "shuttle": {
+				if (whatToTransport == "food") {
+					localStorage.setItem("isShuttleGotFood", "true");
+					replyText = "Food supplies have been successfully transported to the shuttle - " + "#77473332";
+				} else {
+					replyText = "I don't need to send this here";
+				}
+				break;
+			}
+			case "shuttle corridor":
+			case "corridor":
+			case "shuttle bay": 
+			case "bridge": {
+				if (whatToTransport == "tools") {
+					localStorage.setItem("isToolsTransported", "true");
+					replyText = "The tools have been successfully transported to the bridge - " + "#65653101";
+				} else {
+					replyText = "I don't need to send this here";
+				}
+				break;
+			}
+			case "officers quarters":
+			case "computer core":
+			case "power generator":
+			case "life support":
+			case "chompers":
+			case "engine":
+			case "air lock":
+			case "medical bay":
+			case "suit room":
+			case "elevator":
+			case "cabin": {
+				replyText = "This room does not have a transporter recieving pad.";
+				break;
+			}
+			default : {
+				replyText = "This is not valid room on the ship.";
+			}
+		}
+		document.getElementById("answer").innerHTML = replyText;
+	});
+});
+</script>
+<body style="background-color:black; font-family: Digital7;color:white; font-size: 16pt;">
+
+
+	<input id="food" type="image" src="../images/apple.png" style="left:200px; top:100px; height:120px; width:120px; position:absolute;"/>
+	<input id="tools" type="image" src="../images/spanner.png" style="left:450px; top:100px; height:120px; width:120px; position:absolute;"/>
+
+
+	<input id="text" type="text" placeholder="Room name" style="left:250px; top:550px; height:40px; width:150px; position:absolute;"/>
+	<input id="button1" type="button" value="Energize" style="left:450px; top:550px; height:40px; width:80px; position:absolute;"/>
+	
+	
+	<div>
+		<p id="answer" style="color:white; left:200px; top:375px; height:50px; width:400px; position:absolute;">
+	</div>
+
+
+</body>
+</html>

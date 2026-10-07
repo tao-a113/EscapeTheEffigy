@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <title>The Effigy - Escape Room v1.0</title>
+</head>
+
+<style>
+@font-face { font-family: Digital7; src: url('digital-7/digital-7.ttf'); } 
+</style>
+
+<script>
+window.onload = function(){
+
+if (localStorage.getItem("isEngineOff") == "true") {
+	document.getElementById("answer").innerHTML = "#8005893";
+}
+
+};
+
+function Square (x,y){
+	this.x = x;
+	this.y = y;
+}
+
+var usedSquares = [];
+var piece;
+var moves = 1;
+
+class Draggable {
+  constructor() {
+
+    this.dragging = false; // Is the object being dragged?
+    this.rollover = false; // Is the mouse over the ellipse?
+
+
+    this.x = 105;
+    this.y = 5;
+    // Dimensions
+    this.w = 40;
+    this.h = 40;
+  }
+
+  over() {
+    // Is mouse over object
+    if (mouseX > this.x && mouseX < this.x + this.w && mouseY > this.y && mouseY < this.y + this.h) {
+      this.rollover = true;
+    } else {
+      this.rollover = false;
+    }
+
+  }
+
+  update() {
+
+    // Adjust location if being dragged
+    if (this.dragging) {
+      this.x = mouseX + this.offsetX;
+      this.y = mouseY + this.offsetY;
+    }
+
+  }
+
+  show() {
+
+    stroke(0);
+    // Different fill based on state
+    if (this.dragging) {
+      fill(50);
+    } else if (this.rollover) {
+      fill(200);
+    } else {
+      fill(255, 200);
+    }
+    rect(this.x, this.y, this.w, this.h);
+  }
+
+  pressed() {
+    // Did I click on the rectangle?
+    if (mouseX > this.x && mouseX < this.x + this.w && mouseY > this.y && mouseY < this.y + this.h) {
+      this.dragging = true;
+      // If so, keep track of relative location of click to corner of rectangle
+      this.offsetX = this.x - mouseX;
+      this.offsetY = this.y - mouseY;
+      this.startX = this.x;
+      this.startY = this.y;
+
+    }
+  }
+
+  released() {
+    // Quit dragging
+    	this.dragging = false;
+        if (mouseX > this.x && mouseY > this.y &&
+	        mouseX<(this.x+this.w) && mouseY<(this.y+this.h)) {
+
+	        var cell_w = 50
+	        var cell_h = 50
+
+	        var cell_ix = int(mouseX / cell_w);
+	        var cell_iy = int(mouseY / cell_h);
+
+	        var cell_cx = (cell_ix+0.5) * cell_w;
+	        var cell_cy = (cell_iy+0.5) * cell_h;
+
+	        this.x = cell_cx - this.w/2;
+	        this.y = cell_cy - this.h/2;
+
+	        if (this.x > (this.startX + cell_w) || this.y > (this.startY + cell_h) ||
+	        	this.x < (this.startX - cell_w) || this.y < (this.startY - cell_h)) {
+	        	this.x = this.startX;
+	        	this.y = this.startY;
+	        } else {
+
+				if (this.x == 0) {xNum = 0;} else {xNum = ((this.x - 5)/50);}
+				if (this.y == 0) {yNum = 0;} else {yNum = ((this.y - 5)/50);}
+				var newSquare = (yNum * 7) + xNum;
+
+				if (usedSquares.includes(newSquare)) {
+					startAgain ();
+					return;
+				}
+
+				var squareText = getTextOnSquare(this.x-5,this.y-5);
+				if (squareText != "" && squareText != (moves+1).toString()) {
+					startAgain ();
+					return;
+				}
+
+				if (squareText == "16") {
+					document.getElementById("answer").innerHTML = "#8005893";
+					localStorage.setItem("isEngineOff", "true");
+				}
+
+				var xNum;
+				var yNum;
+
+				if (this.startX == 0) {xNum = 0;} else {xNum = ((this.startX - 5)/50);}
+				if (this.startY == 0) {yNum = 0;} else {yNum = ((this.startY - 5)/50);}
+
+				var oldSquare = (yNum * 7) + xNum;
+
+	        	// paint the old square
+				usedSquares.push (oldSquare);
+
+	        	moves = moves + 1;
+	        }
+
+    }
+
+  }
+}
+
+function startAgain () {
+	moves = 1;
+	piece.x = 105;
+	piece.y = 5;
+	usedSquares = [];
+}
+
+function setup() {
+  let canvas = createCanvas(550, 200);
+  canvas.position(50, 50, 'fixed');
+  piece = new Draggable();
+}
+
+function draw() {
+	background (0);
+
+	strokeWeight(1);
+	drawBoard ();
+	drawPiece ();
+
+	fill('white');
+	textSize (24);
+	text(moves, width - 250, height/2);
+
+}
+
+function drawBoard() {
+
+	var cream = 90;
+	for (y = 0; y < height; y+=50) {
+		for (x = 0; x < width -350; x+=50) {
+
+			var xNum = x/50;
+			var yNum = y/50;
+			var square = (yNum * 7) + xNum;
+			var n = usedSquares.includes(square);
+
+			if (n) {
+				fill('red');
+			} else {
+				fill(cream);
+			}
+
+
+			rect (x, y, 50, 50);
+
+			var number = getTextOnSquare(x,y);
+
+			fill('white');
+			textSize (24);
+			if (number == "1" || number == "16") {
+				text(number, x + 12, y + 35);
+			}
+		}
+	}
+}
+
+function getTextOnSquare (x,y) {
+var number = "";
+	switch (y) {
+		case (0): if(x==50) number = "16"; if(x==100) number = "1"; break;
+		case (50): if(x==50) number = "15"; if(x==150) number = "3"; break;
+		case (100): if(x==50) number = "9";if(x==100) number = "8"; break;
+		case (150): if(x==0) number = "11";if(x==150) number = "6"; break;
+	}
+	return number;
+}
+
+function drawPiece () {
+	piece.over();
+	piece.update();
+	piece.show();
+}
+
+function mousePressed() {
+  piece.pressed();
+}
+
+function mouseReleased() {
+  piece.released();
+}
+
+</script>
+
+<body style="background-color:black; font-family:Digital7; color:black;font-size:18pt;">
+	<div>
+		<p id="answer" style="color:white; left:150px; top:250px; height:50px; width:100px; position:absolute;">
+	</div>
+
+</body>

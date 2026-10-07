@@ -1,0 +1,86 @@
+<html>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<head>
+</head>
+<script>
+var part1;
+var part2;
+var part3;
+var part4;
+window.onload = function(){
+
+part1 = 1;
+part2 = 1;
+part3 = 1;
+part4 = 1;
+
+document.getElementById("num1").innerHTML = part1;
+document.getElementById("num2").innerHTML = part2;
+document.getElementById("num3").innerHTML = part3;
+document.getElementById("num4").innerHTML = part4;
+
+	$('.button').click(function(){
+
+		var id = $(this).attr('id');
+
+		switch (id) {
+			case ("button1") : part1 = part1 + 1; break;
+			case ("button2") : part2 = part2 + 1; break;
+			case ("button3") : part3 = part3 + 1; break;
+			case ("button4") : part4 = part4 + 1; break;
+			case ("button5") : part1 = part1 - 1; break;
+			case ("button6") : part2 = part2 - 1; break;
+			case ("button7") : part3 = part3 - 1; break;
+			case ("button8") : part4 = part4 - 1; break;
+		}
+
+		if (part1 < 0) part1 = 9;
+		if (part2 < 0) part2 = 9;
+		if (part3 < 0) part3 = 9;
+		if (part4 < 0) part4 = 9;
+
+		if (part1 > 9) part1 = 0;
+		if (part2 > 9) part2 = 0;
+		if (part3 > 9) part3 = 0;
+		if (part4 > 9) part4 = 0;
+
+		document.getElementById("num1").innerHTML = part1;
+		document.getElementById("num2").innerHTML = part2;
+		document.getElementById("num3").innerHTML = part3;
+		document.getElementById("num4").innerHTML = part4;
+
+		if (part1 == 2 && part2 == 6 && part3 == 3 && part4 == 3){
+			document.getElementById("answer").innerHTML = "That did it! The door to the life support room swings open. <br> #5415211";
+			localStorage.setItem("lifeSupportUnlocked", "true");
+		}
+
+	});
+
+};
+</script>
+
+<body style="background-color:black; font-family:Digital7; color:black;font-size:18pt;">
+
+	<input type="image" src="../images/padlock.png" style="width:400px; height:400px; position:absolute; left:180px; top:150px;">
+
+	<input type="image" id="button1" class="button" src="../images/upElevator.png" style="width:40px; height:40px; position:absolute; left:280px; top:350px;">
+	<input type="image" id="button2" class="button" src="../images/upElevator.png" style="width:40px; height:40px; position:absolute; left:335px; top:350px;">
+	<input type="image" id="button3" class="button" src="../images/upElevator.png" style="width:40px; height:40px; position:absolute; left:390px; top:350px;">
+	<input type="image" id="button4" class="button" src="../images/upElevator.png" style="width:40px; height:40px; position:absolute; left:445px; top:350px;">
+
+	<input type="image" id="button5" class="button" src="../images/downElevator.png" style="width:40px; height:40px; position:absolute; left:280px; top:465px;">
+	<input type="image" id="button6" class="button" src="../images/downElevator.png" style="width:40px; height:40px; position:absolute; left:335px; top:465px;">
+	<input type="image" id="button7" class="button" src="../images/downElevator.png" style="width:40px; height:40px; position:absolute; left:390px; top:465px;">
+	<input type="image" id="button8" class="button" src="../images/downElevator.png" style="width:40px; height:40px; position:absolute; left:445px; top:465px;">
+
+	<div>
+		<p id="num1" style="color:white; left:280px; top:400px; height:50px; width:100px; position:absolute;">
+		<p id="num2" style="color:white; left:335px; top:400px; height:50px; width:100px; position:absolute;">
+		<p id="num3" style="color:white; left:390px; top:400px; height:50px; width:100px; position:absolute;">
+		<p id="num4" style="color:white; left:445px; top:400px; height:50px; width:100px; position:absolute;">
+
+		<p id="answer" style="color:white; left:200px; top:580px; height:50px; width:500px; position:absolute;">
+	</div>
+
+</body>

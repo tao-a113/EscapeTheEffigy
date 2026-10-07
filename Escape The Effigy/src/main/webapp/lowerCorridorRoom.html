@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="javascript.js"></script>
+    <link rel="stylesheet" href="stylesheet.css">
+
+    <title>The Effigy - Escape Room v1.0</title>
+</head>
+
+<style>
+#lowerCorridorBody  {
+  background-image: url("images/corridor3.jpg");
+  background-repeat: no-repeat;
+  position: absolute;
+  background-size: cover;
+  height: 770px; width:1250px;
+}
+.buttons:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.buttons:hover  {
+    -webkit-filter: drop-shadow(2px 1px 0 yellow)
+    				  drop-shadow(-1px -1px 0 yellow);
+    filter: drop-shadow(2px 1px 0 yellow)
+  		  drop-shadow(-1px -1px 0 yellow);
+}
+
+#circle{
+    height:6rem;
+    width:6rem;
+    opacity:0;
+    border-radius: 4rem;
+	position:absolute;
+	left:12px; top:40px;
+
+  -webkit-transition: all .1s ease-in-out;  
+  -moz-transition: all .1s ease-in-out;  
+  -o-transition: all .1s ease-in-out;  
+  -ms-transition: all .1s ease-in-out;  
+  transition: all .1s ease-in-out;
+  
+	background:white;
+}
+
+.pulsate {
+  animation-iteration-count: 1;
+  animation: pulse 0.5s;
+  animation-direction: alternate;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0;
+  }
+  50%{
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+</style>
+
+<script>
+$( document ).ready(function() {
+	$('#button3').bind('click', function(){
+		document.getElementById("roomResponseText").innerText = "";
+		var text = "Careful while walking here";
+		setTypeWriter();
+		typeWriter (text);
+		popupWindow = window.open(
+			"popups/popupWetSign.html",'popUpWindow','height=600,width=500,left=50,top=50,resizable=no,scrollbars=no,toolbar=no,menubar=no,location=no,directories=no,status=yes'
+		)
+	});
+	$('#button1').bind('click', function(){
+		document.getElementById("roomResponseText").innerText = "";
+		var text = "A whiteboard";
+		setTypeWriter();
+		typeWriter (text);
+
+		popupWindow = window.open(
+			"popups/popupWhiteboard.html",'popUpWindow','height=600,width=800,left=50,top=50,resizable=no,scrollbars=no,toolbar=no,menubar=no,location=no,directories=no,status=yes'
+		)
+
+	});
+	$('#button2').bind('click', function(){
+		document.getElementById("roomResponseText").innerText = "";
+		var text = "Seems to be one of those propoganda posters";
+		setTypeWriter();
+		typeWriter (text);
+		popupWindow = window.open(
+			"popups/popupSam.html",'popUpWindow','height=600,width=800,left=50,top=50,resizable=no,scrollbars=no,toolbar=no,menubar=no,location=no,directories=no,status=yes'
+		)
+	});
+	$('#button4').bind('click', function(){
+		document.getElementById("roomResponseText").innerText = "";
+		var text = "You find a scrap of paper hidden in the vent";
+		setTypeWriter();
+		typeWriter (text);
+		popupWindow = window.open(
+			"popups/popupnoteLock.html",'popUpWindow','height=450,width=800,left=50,top=50,resizable=no,scrollbars=no,toolbar=no,menubar=no,location=no,directories=no,status=yes'
+		)
+	});
+	
+	$('#circle').on('webkitAnimationEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function() {
+		$(this).removeClass('pulsate');
+	})
+	//22427972
+	setTimeout(function(){ $('#circle').addClass('pulsate');}, 2000);
+	setTimeout(function(){ $('#circle').addClass('pulsate');}, 2600);
+	
+	setTimeout(function(){ $('#circle').addClass('pulsate');}, 5600);
+	setTimeout(function(){ $('#circle').addClass('pulsate');}, 6200);
+	
+	setTimeout(function(){ $('#circle').addClass('pulsate');}, 9200);
+	setTimeout(function(){ $('#circle').addClass('pulsate');}, 9800);
+	setTimeout(function(){ $('#circle').addClass('pulsate');}, 10400);
+	setTimeout(function(){ $('#circle').addClass('pulsate');}, 11000);
+	
+	setTimeout(function(){ $('#circle').addClass('pulsate');}, 14000);
+	setTimeout(function(){ $('#circle').addClass('pulsate');}, 14600);
+	
+	setTimeout(function(){ $('#circle').addClass('pulsate');}, 17600);
+	setTimeout(function(){ $('#circle').addClass('pulsate');}, 18200);
+	setTimeout(function(){ $('#circle').addClass('pulsate');}, 18800);
+	setTimeout(function(){ $('#circle').addClass('pulsate');}, 19400);
+	setTimeout(function(){ $('#circle').addClass('pulsate');}, 20000);
+	setTimeout(function(){ $('#circle').addClass('pulsate');}, 20600);
+	setTimeout(function(){ $('#circle').addClass('pulsate');}, 21200);
+
+	setTimeout(function(){ $('#circle').addClass('pulsate');}, 24200);
+	setTimeout(function(){ $('#circle').addClass('pulsate');}, 24800);
+	setTimeout(function(){ $('#circle').addClass('pulsate');}, 25400);
+	setTimeout(function(){ $('#circle').addClass('pulsate');}, 26000);
+	setTimeout(function(){ $('#circle').addClass('pulsate');}, 26600);
+	setTimeout(function(){ $('#circle').addClass('pulsate');}, 27200);
+	setTimeout(function(){ $('#circle').addClass('pulsate');}, 27800);
+	setTimeout(function(){ $('#circle').addClass('pulsate');}, 28400);
+	setTimeout(function(){ $('#circle').addClass('pulsate');}, 29000);
+
+	setTimeout(function(){ $('#circle').addClass('pulsate');}, 32000);
+	setTimeout(function(){ $('#circle').addClass('pulsate');}, 32600);
+	setTimeout(function(){ $('#circle').addClass('pulsate');}, 33200);
+	setTimeout(function(){ $('#circle').addClass('pulsate');}, 33800);
+	setTimeout(function(){ $('#circle').addClass('pulsate');}, 34400);
+	setTimeout(function(){ $('#circle').addClass('pulsate');}, 35000);
+	setTimeout(function(){ $('#circle').addClass('pulsate');}, 35600);
+
+	setTimeout(function(){ $('#circle').addClass('pulsate');}, 38600);
+	setTimeout(function(){ $('#circle').addClass('pulsate');}, 39200);
+});
+</script>
+
+<body>
+	<div id="lowerCorridorBody">
+	
+		<img src="images/bulb.png" style="top:50px; left:0px; height:80px; width:85px; position:absolute"/>
+		<div id="circle"></div>
+		
+		<input id="button1" class="buttons" type="image" src="images/corridor3Button1.png" style="top:310px; left:1075px; height:120px; width:175px; position:absolute"/>
+		<input id="button2" class="buttons" type="image" src="images/corridor3Button2.png" style="top:416px; left:350px; height:60px; width:37px; position:absolute"/>
+		<input id="button3" class="buttons" type="image" src="images/corridor3Button3.png" style="top:475px; left:765px; height:88px; width:40px; position:absolute"/>
+		<input id="button4" class="buttons" type="image" src="images/corridor3Button4.png" style="top:625px; left:428px; height:90px; width:80px; position:absolute"/>
+	</div>
+
+	<div id="roomDescription" class="roomDescription">
+		<p id="roomDescriptionText" style="width:370px; height:300px; margin-left:20px; margin-top:30px; top:47px; left:48px; position:relative;">
+			You are in the maintenance corridor of the ship. If you listen carefully you can hear a whacking sound from somewhere.
+		</p>
+	</div>
+
+	<br><br>
+
+	<div id="roomResponses" class="roomResponses">
+		<p id="roomResponseText" style="width:360px; height:300px; margin-left:20px; margin-top:30px; top:80px; left:63px; position:relative;"></p>
+	</div>
+</body>
+	<div class="console">
+		<input style="margin-top:40px; margin-left:40px" type="text" class="consoleText">
+		<input style="margin-top:40px;" type="submit" value="Update System" class="consoleButton">
+		<input style="margin-top:10px; height:70px; width:600px; margin-left:70px" type="textarea" id="consoleArea">
+	</div>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="javascript.js"></script>
+    <link rel="stylesheet" href="stylesheet.css">
+
+    <title>The Effigy - Escape Room v1.0</title>
+</head>
+
+<style>
+#elevatorBody  {
+  background-image: url("images/elevator.jpg");
+  background-repeat: no-repeat;
+  position: absolute;
+  background-size: cover;
+  height:770px; width:1250px;
+}
+
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+@keyframes shakeButton {
+  -ms-transform: rotate(-17deg);
+  transform: rotate(-17deg);
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+.shake {
+  animation: shake 10s;
+}
+
+.buttons:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.buttons:hover  {
+    -webkit-filter: drop-shadow(2px 1px 0 yellow)
+    				  drop-shadow(-1px -1px 0 yellow);
+    filter: drop-shadow(2px 1px 0 yellow)
+  		  drop-shadow(-1px -1px 0 yellow);
+}
+</style>
+
+<script>
+$( document ).ready(function() {
+
+	var up;
+
+	var previousRoom = sessionStorage.getItem("previousRoom");
+	if (previousRoom == "bridge") {
+		parent.document.getElementById("bridgeRoomAccess").style.display = "block";
+		parent.document.getElementById("upperCorridorRoomAccess").style.display = "none";
+		up = true;
+	} else {
+		parent.document.getElementById("upperCorridorRoomAccess").style.display = "block";
+		parent.document.getElementById("bridgeRoomAccess").style.display = "none";
+		up = false;
+	}
+
+	$('#button2').click(function(){
+		if (!up) {
+
+			document.getElementById("roomResponseText").innerText = "";
+			var text = "going up";
+			setTypeWriter();
+			typeWriter (text);
+
+			up = true;
+			elevatorWait();
+		}
+	});
+	$('#button3').click(function(){
+		if (up) {
+
+			document.getElementById("roomResponseText").innerText = "";
+			var text = "going down";
+			setTypeWriter();
+			typeWriter (text);
+
+			up = false;
+			elevatorWait();
+		}
+	});
+
+	function elevatorWait () {
+
+		parent.document.getElementById("bridgeRoomAccess").style.display = 'none';
+		parent.document.getElementById("upperCorridorRoomAccess").style.display = 'none';
+
+		document.getElementById("elevatorBody").classList.add("shake");
+		document.getElementById("button1").classList.add("shake");
+		document.getElementById("button2").classList.add("shakeButton");
+		document.getElementById("button3").classList.add("shakeButton");
+
+		setTimeout(elevatorFinish, 10000);
+	}
+
+	function elevatorFinish () {
+
+		if (up) {
+			parent.document.getElementById("bridgeRoomAccess").style.display = 'block';
+
+			document.getElementById("roomResponseText").innerText = "";
+			var text = "1st floor";
+			setTypeWriter();
+			typeWriter (text);
+
+		} else {
+			parent.document.getElementById("upperCorridorRoomAccess").style.display = 'block';
+
+			document.getElementById("roomResponseText").innerText = "";
+			var text = "ground floor";
+			setTypeWriter();
+			typeWriter (text);
+		}
+
+		document.getElementById("elevatorBody").classList.remove("shake");
+		document.getElementById("button1").classList.remove("shake");
+		document.getElementById("button2").classList.remove("shakeButton");
+		document.getElementById("button3").classList.remove("shakeButton");
+
+	}
+
+	$('#button1').click(function(){
+
+		var completePuzzle = localStorage.getItem("isElevatorPuzzleComplete");
+
+		if (completePuzzle == "true") {
+
+			document.getElementById("roomResponseText").innerText = "";
+			var text = "The elevator has been fixed.";
+			setTypeWriter();
+			typeWriter (text);
+		} else {
+			document.getElementById("roomResponseText").innerText = "";
+			var text = "The elevator has been damaged and has defaulted to older programming. Find a way to override the elevator controls.";
+			setTypeWriter();
+			typeWriter (text);
+
+			popupWindow = window.open(
+				"popups/popupElevatorControls.html",'popUpWindow','height=800,width=800,left=50,top=50,resizable=no,scrollbars=no,toolbar=no,menubar=no,location=no,directories=no,status=yes'
+			)
+		}
+	});
+
+});
+</script>
+  -ms-transform: rotate(20deg); transform: rotate(20deg);
+<body>
+	<div id="elevatorBody">
+		<input id="button1" class="buttons" type="image" src="images/elevatorButton1.png" style="top:250px; left:370px; height:150px; width:120px; position:absolute;"/>
+		<input id="button2" class="buttons" type="image" src="images/upElevator.png" style="top:270px; left:265px; height:80px; width:80px; position:absolute; -ms-transform: rotate(-17deg); transform: rotate(-17deg); display:none;"/>
+		<input id="button3" class="buttons" type="image" src="images/downElevator.png" style="top:350px; left:290px; height:80px; width:80px; position:absolute; -ms-transform: rotate(-17deg); transform: rotate(-17deg); display:none;"/>
+	</div>
+
+	<div id="roomDescription" class="roomDescription">
+		<p id="roomDescriptionText" style="width:370px; height:300px; margin-left:20px; margin-top:30px; top:47px; left:48px; position:relative;">
+			You are in the elevator.
+		</p>
+	</div>
+
+	<br><br>
+
+	<div id="roomResponses" class="roomResponses">
+		<p id="roomResponseText" style="width:360px; height:300px; margin-left:20px; margin-top:30px; top:80px; left:63px; position:relative;"></p>
+	</div>
+</body>
+	<div class="console">
+		<input style="margin-top:40px; margin-left:40px" type="text" class="consoleText">
+		<input style="margin-top:40px;" type="submit" value="Update System" class="consoleButton">
+		<input style="margin-top:10px; height:70px; width:600px; margin-left:70px" type="textarea" id="consoleArea">
+	</div>
+</html>

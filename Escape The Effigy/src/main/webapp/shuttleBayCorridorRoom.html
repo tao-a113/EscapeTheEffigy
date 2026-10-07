@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="javascript.js"></script>
+    <link rel="stylesheet" href="stylesheet.css">
+
+    <title>The Effigy - Escape Room v1.0</title>
+</head>
+
+<style>
+
+#shuttleBayCorridorBody  {
+  background-image: url("images/corridor5.jpg");
+  background-repeat: no-repeat;
+  position: absolute;
+  background-size: cover;
+  height: 770px; width:1250px;
+}
+.buttons:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.buttons:hover  {
+    -webkit-filter: drop-shadow(2px 1px 0 yellow)
+    				  drop-shadow(-1px -1px 0 yellow);
+    filter: drop-shadow(2px 1px 0 yellow)
+  		  drop-shadow(-1px -1px 0 yellow);
+}
+</style>
+
+<script>
+$( document ).ready(function() {
+	$('#button1').click(function(){
+	
+		if (localStorage.getItem("shuttleBayRoomCondition") == "fixed") {
+		
+			document.getElementById("roomResponseText").innerText = "";
+			var text = "Pulling that seemed to do something. You hear loud banginging sounds from somewhere on the ship. #0955302";
+			setTypeWriter();
+			typeWriter (text);
+			localStorage.setItem("isChomperRoomUnlocked", "true");
+		} else {
+			document.getElementById("roomResponseText").innerText = "";
+			var text = "You should probably fix this room up before touching this";
+			setTypeWriter();
+			typeWriter (text);
+		}
+	});
+	$('#button2').click(function(){
+	
+		if (localStorage.getItem("shuttleBayRoomCondition") == "fixed") {
+		
+			document.getElementById("roomResponseText").innerText = "";
+			var text = "Some information";
+			setTypeWriter();
+			typeWriter (text);
+			popupWindow = window.open(
+				"popups/popupShuttleDoorInfo.html",'popUpWindow','height=450,width=700,left=300,top=200,resizable=no,scrollbars=no,toolbar=no,menubar=no,location=no,directories=no,status=yes'
+			)
+		} else {
+			document.getElementById("roomResponseText").innerText = "";
+			var text = "You should probably fix this room up before touching this";
+			setTypeWriter();
+			typeWriter (text);
+		}
+	});
+	$('#hole').click(function(){
+	
+		document.getElementById("roomResponseText").innerText = "";
+		var text = "There is a hole directly out into space.";
+
+		var tools = localStorage.getItem("gotTools");
+		var condition = localStorage.getItem("shuttleBayRoomCondition");
+		
+		if (tools == "true" && condition == "broken") {
+		// fix the ship up
+			localStorage.setItem("shuttleBayRoomCondition", "noOxygen");
+			var text = "You fix up the ship. This room is now completely secured but will need to be filled with oxygen before other crewmates can access it. #465510122";
+			$('#hole').prop( "disabled", true );
+			$('#woodenFix').show ();
+		}
+		
+		setTypeWriter();
+		typeWriter (text);
+	});
+	$('#woodenFix').click(function(){
+		var condition = localStorage.getItem("shuttleBayRoomCondition");
+		document.getElementById("roomResponseText").innerText = "";
+		if (condition == "noOxygen") {
+			var text = "This hole in the ship has been patched up nicely. #465510122";
+		} else if (condition == "fixed") {
+			var text = "This hole in the ship has been patched up nicely.";
+		}
+		setTypeWriter();
+		typeWriter (text);
+	});
+	if (localStorage.getItem("shuttleBayRoomCondition") == "noOxygen") {
+		$('#hole').prop( "disabled", true );
+		$('#woodenFix').show ();
+	}
+	if (localStorage.getItem("shuttleBayRoomCondition") == "fixed") {
+		$('#hole').prop( "disabled", true );
+		$('#woodenFix').show ();
+	}
+	
+});
+</script>
+
+<body>
+	<div id="shuttleBayCorridorBody">
+		<input id="button1" class="buttons" type="image" src="images/lever.png" style="top:340px; left:826px; height:70px; width:40px; position:absolute;"/>
+		<input id="button2" class="buttons" type="image" src="images/paper.png" style="top:350px; left:930px; height:60px; width:40px; position:absolute;"/>
+		<input id="hole" class="buttons" type="image" src="images/hole.png" style="top:140px; left:650px; height:100px; width:140px; position:absolute;"/>
+		<input id="woodenFix" class="buttons" type="image" src="images/fixedCross.png" style="top:135px; left:670px; height:100px; width:100px; position:absolute; display:none;"/>
+	</div>
+
+	<div id="roomDescription" class="roomDescription">
+		<p id="roomDescriptionText" style="width:370px; height:300px; margin-left:20px; margin-top:30px; top:47px; left:48px; position:relative;">
+			This is the corridor leading to the shuttle. It looks like its been damaged recently.
+		</p>
+	</div>
+
+	<br><br>
+
+	<div id="roomResponses" class="roomResponses">
+		<p id="roomResponseText" style="width:360px; height:300px; margin-left:20px; margin-top:30px; top:80px; left:63px; position:relative;"></p>
+	</div>
+</body>
+	<div class="console">
+		<input style="margin-top:40px; margin-left:40px" type="text" class="consoleText">
+		<input style="margin-top:40px;" type="submit" value="Update System" class="consoleButton">
+		<input style="margin-top:10px; height:70px; width:600px; margin-left:70px" type="textarea" id="consoleArea">
+	</div>
+</html>

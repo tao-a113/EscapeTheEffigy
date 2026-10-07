@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="javascript.js"></script>
+    <link rel="stylesheet" href="stylesheet.css">
+
+    <title>The Effigy - Escape Room v1.0</title>
+</head>
+
+<style>
+#changingRoomBody  {
+  background-image: url("images/changingRoom.jpg");
+  background-repeat: no-repeat;
+  position: absolute;
+  background-size: cover;
+  height: 770px; width:1250px;
+}
+.buttons:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.buttons:hover  {
+    -webkit-filter: drop-shadow(2px 1px 0 yellow)
+    				  drop-shadow(-1px -1px 0 yellow);
+    filter: drop-shadow(2px 1px 0 yellow)
+  		  drop-shadow(-1px -1px 0 yellow);
+}
+
+#sleepingBar {
+  width: 1%;
+  height: 30px;
+  background-color: #4CAF50;
+  text-align: center; /* To center it horizontally (if you want) */
+  line-height: 30px; /* To center it vertically */
+  color: green;
+}
+
+#myProgress {
+  width: 600px%;
+  background-color: grey;
+  left:320px; top:350px; position:absolute;
+  width:600px;
+  display:none;
+}
+
+</style>
+
+<script>
+	$( document ).ready(function() {
+	
+	var i = 0;
+	function move() {
+	  if (i == 0) {
+		i = 1;
+		var elem = document.getElementById("sleepingBar");
+		var width = 1;
+		var id = setInterval(frame, 150);
+		function frame() {
+		  if (width >= 100) {
+			clearInterval(id);
+			i = 0;
+			
+			parent.document.getElementById("upperCorridorRoomAccess").style.display = 'block';
+			$("#myProgress").fadeOut(3000);
+			$('.buttons').show ();
+			
+		  } else {
+			width++;
+			elem.style.width = width + "%";
+		  }
+		}
+	  }
+	}
+	
+		$('#button1').click(function(){
+			document.getElementById("roomResponseText").innerText = "";
+			var text = "You can callobrate the vac suit from here. But you need an audio callobrator.";
+			setTypeWriter();
+			typeWriter (text);
+			popupWindow = window.open(
+				"popups/popupRadio_sui.html",'popUpWindow','height=600,width=800,left=300,top=200,resizable=no,scrollbars=no,toolbar=no,menubar=no,location=no,directories=no,status=yes'
+			)
+		});
+
+	
+		$('#button2').click(function(){
+	
+			var ready = localStorage.getItem("isSuitsReady");
+			var wearing = localStorage.getItem("isWearingSuit");
+			
+			document.getElementById("roomResponseText").innerText = "";
+			
+			if (ready == "true" && wearing == "false") {
+				var text = "You take a moment to change into the vac suit";
+				
+				$('.buttons').hide ();
+				$("#myProgress").fadeIn(3000);
+				localStorage.setItem("isWearingSuit", "true");
+				parent.document.getElementById("upperCorridorRoomAccess").style.display = 'none';
+				move ();
+				
+			} else if (ready == "false") {
+				var text = "You can change into a vac suit here but the suits need callobrating with an audio callobrator before they can be worn.";
+			} else if (wearing == "true") {
+				var text = "You are already wearing a vac suit.";
+			}
+			setTypeWriter();
+			typeWriter (text);
+		});
+		
+	});
+
+	
+</script>
+
+<body>
+	<div id="changingRoomBody">
+		<input id="button1" class="buttons" type="image" src="images/changingRoomButton1.png" style="top:160px; left:960px; height:352px; width:196px; position:absolute"/>
+		<input id="button2" class="buttons" type="image" src="images/changingRoomButton2.png" style="top:110px; left:550px; height:525px; width:60px; position:absolute"/>
+		<input id="button3" class="buttons" type="image" src="images/changingRoomButton3.png" style="top:200px; left:640px; height:68px; width:35px; position:absolute"/>
+	</div>
+
+	<div id="myProgress">
+		<div id="sleepingBar">
+		</div>
+	</div>
+	
+	<div id="roomDescription" class="roomDescription">
+		<p id="roomDescriptionText" style="width:370px; height:300px; margin-left:20px; margin-top:30px; top:47px; left:48px; position:relative;">
+			This room contains the ships haz-suits.
+		</p>
+	</div>
+
+	<br><br>
+
+	<div id="roomResponses" class="roomResponses">
+		<p id="roomResponseText" style="width:360px; height:300px; margin-left:20px; margin-top:30px; top:80px; left:63px; position:relative;"></p>
+	</div>
+</body>
+	<div class="console">
+		<input style="margin-top:40px; margin-left:40px" type="text" class="consoleText">
+		<input style="margin-top:40px;" type="submit" value="Update System" class="consoleButton">
+		<input style="margin-top:10px; height:70px; width:600px; margin-left:70px" type="textarea" id="consoleArea">
+	</div>
+</html>

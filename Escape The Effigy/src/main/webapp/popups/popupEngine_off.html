@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <title>The Effigy - Escape Room v1.0</title>
+</head>
+
+<style>
+</style>
+
+<script>
+
+function setup() {
+  let canvas = createCanvas(550, 200);
+  canvas.position(50, 50, 'fixed');
+}
+
+function draw() {
+	background (0);
+
+	strokeWeight(1);
+	drawBoard ();
+
+}
+
+function drawBoard() {
+
+	var cream = 90;
+	for (y = 0; y < height; y+=50) {
+		for (x = 0; x < width - 350; x+=50) {
+			fill(cream);
+			rect (x, y, 50, 50);
+
+			var number = getTextOnSquare(x,y);
+
+			fill('white');
+			textSize (24);
+			text(number, x + 12, y + 35);
+		}
+	}
+}
+
+function getTextOnSquare (x,y) {
+var number = "";
+	switch (y) {
+		case (0): if(x==50) number = "16"; if(x==100) number = "1"; break;
+		case (50): if(x==50) number = "15"; if(x==150) number = "3"; break;
+		case (100): if(x==50) number = "9";if(x==100) number = "8"; break;
+		case (150): if(x==0) number = "11";if(x==150) number = "6"; break;
+	}
+	return number;
+}
+
+</script>
+
+<body style="background-color:black; font-family:Digital7; color:black;font-size:18pt;">
+
+</body>

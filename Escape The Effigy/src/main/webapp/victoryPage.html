@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="javascript.js"></script>
+    <link rel="stylesheet" href="stylesheet.css">
+
+    <title>The Effigy - Escape Room v1.0</title>
+</head>
+
+<style>
+#container 
+{
+	overflow:hidden;
+	text-align: center;
+	margin:auto;
+}
+
+#fancy_h1_wrap
+{
+    display:block;
+    width:100%;
+    height:100%;
+    position:absolute;
+    top:100%;
+}
+</style>
+
+<script>
+
+$( document ).ready(function() {
+
+var canvas = document.getElementById("icanvas");
+var ctx = canvas.getContext("2d");
+
+ctx.canvas.width  = window.screen.width
+ctx.canvas.height = window.screen.height
+
+var imgTag = new Image();
+var x = 0;
+var y = 100;
+
+imgTag.onload = animate;
+imgTag.src = "images/shipImage.png";   // load image
+
+
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);  // clear canvas
+ 
+  
+  ctx.drawImage(imgTag, x, y, 20, 20);                       // draw image at current position
+  x += .5;
+  if (x < window.screen.width) requestAnimationFrame(animate)        // loop
+}
+
+
+
+
+function fun(){
+$('#fancy_h1_wrap').css('top', '');
+$('#fancy_h1_wrap').animate({top:"-400%"}, 60000, fun);
+    
+}
+
+var tim = localStorage.getItem("timer");
+    var h = Math.floor(tim / 3600);
+    var m = Math.floor(tim % 3600 / 60);
+    var s = Math.floor(tim % 3600 % 60);
+	
+	if (/^\d$/.test(h))  {h = "0" + h;}
+	if (/^\d$/.test(m))  {m = "0" + m;}
+	if (/^\d$/.test(s))  {s = "0" + s;}
+	
+$(".time").html ("Your total time was " + h + ":" + m + ":" + s);
+
+var secret = localStorage.getItem("secretFound");
+if (secret == "true") {
+	$('.secret').html ("Secrets found 1/1")
+}
+
+fun();
+});
+</script>
+
+<body style="color:white; overflow: hidden;">
+<div style="background-image: url('images/spaceBackground.jpg')">
+<canvas id="icanvas" width=640 height=180></canvas>
+
+    <div id="container">
+        <div id="fancy_h1_wrap">
+            <h1>You have escaped the Effigy!!</h1>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<h1 class="time"></h1>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+            <h1>Developed and designed by Alex Cunningham</h1>
+            <h1>co-designed by Sally Hardcastle</h1>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<h1 class="secret">Secrets found 0/1</h1>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<h1>Thanks for playing!!</h1>
+        </div>
+    </div>
+
+</div>
+</body>

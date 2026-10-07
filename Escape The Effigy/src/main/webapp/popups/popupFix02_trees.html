@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <title>The Effigy - Escape Room v1.0</title>
+</head>
+
+<style>
+</style>
+
+<script>
+
+function setup() {
+  let canvas = createCanvas(600, 600);
+}
+var treeStage;
+var oxygenLeft;
+
+window.onload = function(){
+
+oxygenLeft = 2;
+treeStage = localStorage.getItem("treeStage");
+var completed = localStorage.getItem("isShuttleGotOxygen");
+
+if (completed == "true") {
+	oxygenLeft = oxygenLeft - 1;
+}
+var completed = localStorage.getItem("isShuttleBayGotOxygen");
+if (completed == "true") {
+	oxygenLeft = oxygenLeft - 1;
+}
+checkAirLeft ();
+
+function checkAirLeft() {
+	if (treeStage == "3" && oxygenLeft == 2) {
+		document.getElementById("done").innerHTML = "The Bissalium is producing a high quantity of Oxygen. There is a lot left.";
+	} else if (treeStage == "3" && oxygenLeft == 1) {
+		document.getElementById("done").innerHTML = "The Bissalium is producing a high quantity of Oxygen. There is enough left for a single room.";
+	} else if (treeStage == "3" && oxygenLeft == 0) {
+		document.getElementById("done").innerHTML = "The Bissalium is producing a high quantity of Oxygen. There is none left.";
+	}
+}
+
+	// clear
+	$('#button1').click(function(){
+
+		if (treeStage != 3) {
+			document.getElementById("answer").innerHTML = "The plant is not producing any extra oxygen to transport";
+			return;
+		}
+		var roomName = document.getElementById('text').value;
+		var replyText;
+
+		if (roomName == undefined) roomName = "";
+		roomName = roomName.toLowerCase();
+
+		switch (roomName) {
+
+			case "shuttle": {
+				if (localStorage.getItem("isShuttleGotOxygen") != "true") {
+					localStorage.setItem("isShuttleGotOxygen", "true");
+					replyText = "Sending Oxygen to the shuttle - " + "#5561900";
+					oxygenLeft = oxygenLeft - 1;
+					checkAirLeft ();
+				} else {
+					replyText = "You have already transported oxygen here";
+				}
+				break;
+			}
+
+			case "shuttle corridor":
+			case "shuttle bay corridor":
+			case "corridor":
+			case "shuttle bay": {
+				if (localStorage.getItem("isShuttleBayGotOxygen") != "true" && localStorage.getItem("shuttleBayRoomCondition") ==  "noOxygen") {
+					localStorage.setItem("isShuttleBayGotOxygen", "true");
+					localStorage.setItem("shuttleBayRoomCondition", "fixed");
+					replyText = "Sending Oxygen to the corridor outside the shuttle - " + "#6546711";
+					oxygenLeft = oxygenLeft - 1;
+					checkAirLeft ();
+				} else {
+					replyText = "You have already transported oxygen here";
+				}
+				break;
+			}
+
+			case "bridge":
+			case "officers quarters":
+			case "computer core":
+			case "power generator":
+			case "life support":
+			case "chompers":
+			case "engine":
+			case "air lock":
+			case "medical bay":
+			case "suit room":
+			case "elevator":
+			case "cabin": {
+				replyText = "This room does not require oxygen.";
+				break;
+			}
+			default : {
+				replyText = "This is not valid room on the ship.";
+			}
+		}
+		document.getElementById("answer").innerHTML = replyText;
+	});
+};
+
+function draw() {
+
+
+
+	stroke('black');
+  	strokeWeight(5);
+
+	fill (195)
+	rect (100,0, 450, 400);
+
+	let color1;
+	let color2;
+	let color3;
+	let color4;
+	let color5;
+	var color6;
+
+	if (treeStage == "0") {
+		color1="green"; color2="green"; color3="green"; color4="green"; color5="green"; color6="green";
+	}
+	if (treeStage == "1") {
+		color1="brown"; color2="darkorange"; color3="brown"; color4="green"; color5="green"; color6="blue";
+	}
+	if (treeStage == "2") {
+		color1="darkorange"; color2="pink"; color3="blue"; color4="black"; color5="green"; color6="blue";
+	}
+	if (treeStage == "3") {
+		color1="red"; color2="red"; color3="red"; color4="red"; color5="red"; color6="red";
+	}
+	push ();
+	translate(50, 200);
+  	fill (color1);
+	bezier(100, 10, 70, 55, 100, 60, 100, 60);
+	bezier(100, 10, 130, 55, 100, 60, 100, 60);
+	pop ();
+
+	push ();
+	translate(100, 120);
+	fill (color2);
+	bezier(100, 10, 70, 55, 100, 60, 100, 60);
+	bezier(100, 10, 130, 55, 100, 60, 100, 60);
+	pop ();
+
+	push ();
+	translate(210, 30);
+	fill (color3);
+	bezier(100, 10, 70, 55, 100, 60, 100, 60);
+	bezier(100, 10, 130, 55, 100, 60, 100, 60);
+	pop ();
+
+	push ();
+	translate(390, 130);
+	fill (color4);
+	bezier(100, 10, 70, 55, 100, 60, 100, 60);
+	bezier(100, 10, 130, 55, 100, 60, 100, 60);
+	pop ();
+
+	push ();
+	translate(320, 290);
+	fill (color5);
+	bezier(100, 10, 70, 55, 100, 60, 100, 60);
+	bezier(100, 10, 130, 55, 100, 60, 100, 60);
+	pop ();
+
+	push ();
+	translate(260, 130);
+	fill (color6);
+	bezier(100, 10, 70, 55, 100, 60, 100, 60);
+	bezier(100, 10, 130, 55, 100, 60, 100, 60);
+	pop ();
+}
+
+</script>
+
+<body style="background-color:black; font-family:Digital7; color:black;font-size:12pt;">
+
+	<img src = '../images/tree.png'; style="width:90%; left:50px; position:absolute;">
+
+	<input id="text" type="Text" placeholder="Room name..." style="left:150px; top:500px; height:26px; width:200px; position:absolute;"/>
+	<input id="button1" type="button" value="Transfer Oxygen" style="left:400px; top:500px; height:30px; width:120px; position:absolute;"/>
+	<div>
+		<p id="done" style="color:white; left:180px; top:420px; height:30px; width:350px; position:absolute;"/>
+		<p id="answer" style="color:white; left:180px; top:530px; height:30px; width:350px; position:absolute;"/>
+	</div>
+</body>

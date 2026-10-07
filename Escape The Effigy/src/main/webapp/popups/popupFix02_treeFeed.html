@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <title>The Effigy - Escape Room v1.0</title>
+</head>
+
+<style>
+#myProgress {
+  width: 100%;
+  background-color: #ddd;
+}
+
+#myBar {
+  width: 10%;
+  height: 30px;
+  background-color: #4CAF50;
+  text-align: center;
+  line-height: 30px;
+  color: white;
+}
+</style>
+
+<script>
+var replyText;
+var i = 0;
+function move(ans) {
+  if (i == 0) {
+    i = 1;
+    var elem = document.getElementById("myBar");
+    var width = 0;
+    var id = setInterval(frame, 200);
+    function frame() {
+      if (width >= 100) {
+        clearInterval(id);
+        i = 0;
+        finish (ans);
+      } else {
+        width++;
+        elem.style.width = width + "%";
+        elem.innerHTML = width  + "%";
+      }
+    }
+  }
+}
+
+function finish (ans) {
+
+	if (ans == 1) {
+		localStorage.setItem("treeStage", "1");
+		replyText = "Ratchecroxide has been added. The plant seems to be changing.";
+	} else if (ans == 2) {
+		localStorage.setItem("treeStage", "2");
+		replyText = "Salty water has been added. The plant seems to be changing.";
+	} else if (ans == 3) {
+		localStorage.setItem("treeStage", "3");
+		replyText = "Mandalope paste has been added. The plant seems to be changing.";
+	}
+	document.getElementById("answer").innerHTML = replyText;
+}
+
+window.onload = function(){
+
+	// clear
+	$('#button1').click(function(){
+		document.getElementById("answer").innerHTML = "";
+		var treeStage = localStorage.getItem("treeStage");
+
+		var drugName = document.getElementById('text').value;
+		if (drugName == undefined) drugName = "";
+		drugName = drugName.toLowerCase();
+
+		treeStage = parseInt(treeStage);
+		replyText = "Thats probably not a good idea";
+		if (drugName == "ratchecroxide" && treeStage == 0) {
+			$("#myProgress").show ();
+			replyText = "Watering plant with the solution"
+			move (1);
+		}
+		if (drugName == "salty water" && treeStage == 1) {
+			$("#myProgress").show ();
+			replyText = "Watering plant with the solution"
+			move (2);
+		}
+		if (drugName == "mandalope paste" && treeStage == 2) {
+			$("#myProgress").show ();
+			replyText = "Watering plant with the solution"
+			move (3);
+		}
+		if (drugName == "water" || drugName == "sulfur" || drugName == "salt" || drugName == "magnesium" || drugName == "hydrogen peroxide" || drugName == "potassium") {
+			replyText = "You can only apply complete solutions. Not individual ingrediants.";
+		}
+		document.getElementById("answer").innerHTML = replyText;
+		
+	});
+};
+
+</script>
+
+<body style="background-color:black; font-family:Digital7; color:black;font-size:12pt;">
+
+	<div id="myProgress" style="left:50px; top:200px; width:80%; position:absolute; display:none;">
+	  <div id="myBar">0%</div>
+	</div>
+
+	<input id="text" type="Text" placeholder="Drug Name" style="left:150px; top:500px; height:26px; width:200px; position:absolute;"/>
+	<input id="button1" type="button" value="Apply Solution" style="left:400px; top:500px; height:30px; width:120px; position:absolute;"/>
+	<div>
+		<p id="answer" style="color:white; left:180px; top:530px; height:30px; width:350px; position:absolute;"/>
+	</div>
+</body>

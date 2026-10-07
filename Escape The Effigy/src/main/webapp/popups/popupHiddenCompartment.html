@@ -1,0 +1,60 @@
+<html>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<head>
+</head>
+<script>
+
+window.onload = function(){
+
+	var gotKey = localStorage.getItem("gotKeyFromAnimal");
+	
+	if (gotKey == "true") {
+		$('#key').hide ();
+		$('#text').prop('disabled', true);
+		$('#button1').prop('disabled', true);
+		document.getElementById("result").innerHTML = "You already have the key. Better leave this creature be.";
+	}
+
+	$('#button1').click(function(){
+	
+		var animalTimer = localStorage.getItem("animalTimer");
+		
+		if (animalTimer != "0") {
+			document.getElementById("result").innerHTML = "The creature is ignoring you. Perhaps you should come back later";
+			return;
+		}
+		
+		var offering = document.getElementById('text').value;
+		offering = offering.toLowerCase ();
+		
+		if (offering == "strawberry" || offering == "straw berry" || offering == "strawberries") {
+		
+			document.getElementById("result").innerHTML = "The creature starts nibbeling at the strawberry happily. You are able to grab the key while it's distracted.";
+			localStorage.setItem("gotKeyFromAnimal", "true");
+			$('#key').hide ();
+		} else {
+		
+			document.getElementById("result").innerHTML = "The creature doesn't seem to be interested. It's ignoring you.";
+			localStorage.setItem("animalTimer", "30");
+		}
+	});
+};
+
+</script>
+
+<body style="background-color:black; font-family:Digital7; color:black;font-size:12pt;">
+
+	<img src="../images/key.png" id="key" style="width:15%; left:450px; top:240px; position:absolute; opacity:0.9;">
+	
+	<img src="../images/tribble.png" id="tribble" style="width:50%; left:150px; position:absolute; opacity:0.2;">
+	<img src="../images/eyes.png" id="eyes" style="width:15%; left:240px; top:240px; position:absolute; opacity:0.7;">
+	
+	<input id="text" type="Text" placeholder="Offering.." style="left:150px; top:500px; height:26px; width:200px; position:absolute;"/>
+	<input id="button1" type="button" value="Give" style="left:400px; top:500px; height:30px; width:120px; position:absolute;"/>
+	
+	<p id="result" style="color:white; left:190px; top:420px; height:30px; width:400px; position:absolute;"></p>
+
+	
+</body>
+</html>

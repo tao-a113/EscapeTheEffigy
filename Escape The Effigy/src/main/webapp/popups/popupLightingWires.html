@@ -1,0 +1,162 @@
+<html>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="../javascript.js"></script>
+<head>
+<title>Wires</title>
+</head>
+<script>
+
+	var room = sessionStorage.getItem("room");
+
+    //I've made two separate arrays for the left and right sides
+    let larr = [];
+    let rarr = [];
+    let leftColray = [];
+    let rightColray = [];
+	
+	let leftTextArray = [];
+	let rightTextArray = [];
+
+    //total is the total number of boxes on each side
+    //BEWARE, do add more colours to the colray array before increasing the total
+    let total = 3;
+
+    if (room == "engine") {
+		leftColray = ['aqua', 'gold', 'darkmagenta'];
+		leftTextArray = ['aqua', 'gold', 'magenta'];
+		rightColray = ['lime', 'orange', 'pink'];
+		rightTextArray = ['lime', 'orange', 'pink'];
+    } else if (room == "bridge") {
+		leftColray = ['thistle', 'lime', 'firebrick'];
+		leftTextArray = ['lilac', 'lime', 'dark red'];
+		rightColray = ['saddlebrown', 'blue', 'wheat'];
+		rightTextArray = ['brown', 'blue', 'cream'];
+    } else if (room == "cabin") {
+		leftColray = ['wheat', 'teal', 'silver'];
+		leftTextArray = ['cream', 'teal', 'silver'];
+		rightColray = ['darkgreen', 'gold', 'lightcoral'];
+		rightTextArray = ['dark green', 'gold', 'coral'];
+    }
+
+    //lines is the array that is used to hold the co-ordinates of all lines to be drawn
+    let perm = false;
+
+    //boxw is the width of all boxes to be drawn and is necessary as a Global variable
+    let boxw = 150 / total;
+
+    //gap is the distance between each of the vertical boxes
+    let gap;
+
+    //vertoffset is only used to not start drawing the boxes right from y = 0;
+    let vertoffset;
+
+    //this is only used in a function which makes temporary lines from the boxes to the left, to your mouse position
+    let con = false;
+
+    //these are the variables which are inserted into the array named 'lines' as co-ordinates of the lines to be drawn
+    let a = 0,
+      b = 0,
+      c = 0,
+      d = 0;
+
+    //a var used in a function to compare colours of two boxes
+    let col;
+
+    function setup() {
+      createCanvas(400, 400);
+
+      gap = height / total;
+      vertoffset = gap / 3;
+
+      //initiating the boxes with their positions and colour
+      for (i = 0; i < total; i++) {
+        larr[i] = new Box(25, i * gap, boxw, leftColray[i]);
+        rarr[i] = new Box(width - (boxw+25), i * gap, boxw, rightColray[i]);
+      }
+    }
+
+    function draw() {
+      background(0);
+      translate(0, vertoffset);
+      strokeWeight(1);
+      //showing the boxes from both arrays
+      for (i = 0; i < total; i++) {
+        larr[i].show();
+        rarr[i].show();
+		
+		noFill ();
+		textSize (12)
+		text(leftTextArray[i], 25, i * gap);
+		text(rightTextArray[i], width - (boxw+25), i * gap);
+		
+      }
+      strokeWeight(4);
+
+	  stroke('white');
+      //This checks if the mouse is clicked within a box on the left side
+      if (mouseIsPressed) {
+        for (i = 0; i < total; i++) {
+          if (mouseX > larr[i].x && mouseX < larr[i].x + larr[i].w && mouseY > larr[i].y + vertoffset && mouseY < larr[i].y + larr[i].w + vertoffset) {
+
+            con = true; //enables the funcion below to draw a temporary line
+            perm = false;
+
+            //a,b go into the 'lines' array; col is used below
+            a = (larr[i].x + larr[i].w / 2);
+            b = (larr[i].y + larr[i].w / 2);
+            col = larr[i].color;
+
+          } else if (mouseX > rarr[i].x && mouseX < rarr[i].x + rarr[i].w && mouseY > rarr[i].y + vertoffset && mouseY < rarr[i].y + rarr[i].w + vertoffset) {
+
+			  if (con) {
+				  con = false; //disables the temporary line
+				  perm = true;
+				  c = rarr[i].x + rarr[i].w / 2;
+				  d = rarr[i].y + rarr[i].w / 2;
+
+				  showElectricPuzzleAnswer (b, d);
+				  console.log ("1. " + a);
+				  console.log ("2. " + b);
+				  console.log ("3. " + c);
+				  console.log ("4. " + d);
+
+			  }
+          }
+        }
+      }
+
+      //Temporary line from the box clicked on, to the mouse position
+      if (con) {
+        line(a, b, mouseX, mouseY - vertoffset);
+      }
+
+      //Draws the permanent line
+      if (perm) {
+      	line(a, b, c, d);
+      }
+
+    }
+
+    //Box class which enables code to be modular
+    class Box {
+      constructor(x, y, w, color) {
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.color = color;
+      }
+
+      show() {
+        fill(this.color);
+        rect(this.x, this.y, this.w, this.w);
+      }
+}
+
+</script>
+<body>
+	<div>
+		<p id="answer" style="font-family: Digital7;color:white; font-size: 16pt; background-color:rgba(0, 0, 0, 0); height:50px; width:100px; position:absolute; top:330; left:165;">
+	</div>
+</body>
+</html>
